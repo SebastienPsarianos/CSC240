@@ -1,0 +1,192 @@
+\documentclass[11pt]{article}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage{comment}
+\usepackage{amsmath}
+
+\includecomment{solution}
+\includecomment{question}
+\setlength{\parskip}{1ex}
+\def\nats {{\mathbb N}}
+\def\ints {{\mathbb Z}}
+\newcommand{\Implies}{\mbox{ IMPLIES }}
+\newcommand{\Or}{\mbox{ OR }}
+\renewcommand{\And}{\mbox{ AND }}
+\newcommand{\Not}{\mbox{NOT }}
+\newcommand{\Iff}{\mbox{ IFF }}
+\newcommand{\True}{\mbox{T}}
+\newcommand{\False}{\mbox{F}}
+\begin{document}
+\begin{center}
+\begin{solution}
+Solutions to
+\end{solution}
+{\bf \Large \bf CSC240 Winter 2022 Homework Assignment 1}\\
+\begin{question}
+due Thursday January 20, 2022
+\end{question}
+\end{center}
+\begin{solution}
+\noindent
+{\bf My name and student number: }\\
+Sebastien Psarianos, 1008596119\\
+\medskip
+\noindent
+{\bf The list of people with whom I discussed this homework assignment:} \\
+NO OUTSIDE DISCUSSION\\
+\end{solution}
+\begin{enumerate}
+\item
+\begin{question}
+Let $\ints^\infty$ denote the set of all infinite sequences of integers.\\
+For any
+sequence $S \in \ints^{\infty}$, any positive integer $i \in \ints^+$, and any
+integers $x,y  \in \ints$,
+let\\
+$element(S,i,x)$ = ``the integer $x$
+is the $i$'th element of the sequence of integers $S$"  and\\
+$gt(x,y)$ =  ``the integer $x$ is greater than the integer $y$''.\\
+Consider the following predicate about an infinite sequence of integers $S$:
+$$\begin{array}{l}
+\exists n \in \ints^+. \forall i \in \ints^+.  \left( gt(i,n) \Implies [ \exists x\in \ints. element(S,i,x) \And \right.\\
+\left. \forall j \in \ints^+. (gt(j,i) \Implies \exists y\in \ints. [element(S,j,y)
+\And (gt(x,y) \Or gt(y,x))])]\right).
+\end{array}$$
+\end{question}
+\begin{enumerate}
+\item
+\begin{question}
+Express this sentence using $S$ and at most 10 English words. \\
+\end{question}
+\begin{solution}
+Integers in $S$ with elements before them, don't equal subsequent integers.
+\end{solution}
+\item
+\begin{question}
+Describe a sequence $S$ for which this sentence is true.\\
+\end{question}
+\begin{solution}
+\\
+An infinite sequence $S$ where $S_n=n$ would satisfy this statement.
+When the first implication is true,  $i>n$.
+Since $S_n = n$ there is an element for each positive integer index and the first half of the first conjunction always holds true.
+
+When the second implication's hypothesis is true, $j>i$.
+
+Since there is an element in the set $S$ for each positive integer, the first half of the second conjunction is always true.
+
+Since $j>i$, it follows that $S_j>S_i$ and therefore, the disjunction holds true and the entire statement holds true.
+
+If $\Not(i>n)$ or $\Not(j>i)$ then the whole statement would be vacuously true.
+
+\end{solution}
+\item
+\begin{question}
+Describe a sequence $S$ for which this sentence is false.
+\end{question}
+\begin{solution} \\
+
+The Fibonacci sequence does not satisfy this statement
+
+$S_n =
+    \begin{cases}
+        S_n = 0 & n=1 \\
+        S_n=1 & n=1 \\
+        S_n = S_{n-1} + S_{n-2} & n \ge 2
+    \end{cases} \\
+$
+
+Given $i=2$ there exists $n=1$ where $gt(i,n)$ is true. Therefore the first implication's hypothesis is true.
+
+Since there is an element $S_2$ the first half of the first conjunction will hold true and $x=S_2=1$
+
+Choose $j=3$, then $j > i$ therefore the second implication's hypothesis will also hold true
+
+Therefore since the hypothesis is true, it follows that for the statement to be true, the conclusion must be true.
+There is an element at $S_3$ so the first part of the second conjunction holds true and $y=S_3=1$
+However the second part of the second conjunction is false since $x=y=1$. This in turn makes the second implication, first conjunction, first implication and the entire statement false.
+\end{solution}
+\end{enumerate}
+\item
+\begin{question}
+Consider the following rules from the website\\
+https://ca.usembassy.gov/covid-19-information-canada-3/\\
+for when travellers can enter the US:
+\begin{quotation}
+All air travellers who are not US citizens will be required to be fully vaccinated
+and to provide proof of vaccination status prior to boarding an airplane to the
+United States.  In addition, fully vaccinated people who are not US citizens may
+enter the United States at land ports of entry and ferry terminals.
+All airline passengers to the United States ages two years and older, regardless of
+vaccination status or citizenship, must provide a negative COVID-19 viral test
+taken within one calendar day of travel. Alternatively, travellers to the United
+States may provide documentation from a licensed health care provider of having
+recovered from COVID-19 in the 90 days preceding travel.
+\end{quotation}
+Write a predicate Allowed($x$) for use by an immigration officer which is true
+exactly when person $x$ is allowed to enter the US according to these rules.
+You  should use
+predicates that you define in English, each of which describes one condition and
+whose does not involve any logical connectives. Do not define or use any other
+functions.
+Use the notation from the course slides (and the MIT book). Simplify your predicate
+as much as possible.
+Be sure to precisely specify the domains of your predicates.
+Explain why your answer is correct by describing the correspondence between the
+parts of your predicate and the various parts of the rules.
+Point out any parts of the rules that are not clear, explain how you clarified the
+rules, and why it was appropriate for you to
+clarify them that way.
+as much as possible.
+\end{question}
+\begin{solution}
+
+For:
+\\$P$: Set of people trying to enter the US
+\\$x\in P$: Any person $x$ trying to enter the US
+\\
+\\
+Let:
+\\$citizen(x) =$ The person $x$ is a citizen of the united states
+\\$vaccinated(x)=$ The person $x$ is fully vaccinated
+\\$proof(x)=$ The person $x$ has provided proof of vaccination
+\\$air(x)=$ The person $x$ is trying to enter the US by air
+\\$land(x)=$ The person $x$ is trying to enter the US by land
+\\$ferry(x)=$ The person $x$ is trying to enter the US by ferry terminal
+\\$younger(x)=$ The person $x$ is younger than 2
+\\$tested(x)=$ The person $x$ has had a negative COVID-19 test in the last day.
+\\$recovered(x)=$ The person $x$ has supplied documentation from a licensed health care provider of having recovered from COVID-19 in the 90 days preceding travel
+\\\\\\$Allowed(x)= $
+$air(x)\Implies [(younger(x)\Or tested(x) \Or recovered(x)) \And$\\
+$(\Not(citizen(x)) \Implies [vaccinated(x)\And proof(x)])]\And$\\
+$\left[ (land(x)\Or ferry(x))\And \Not( citizen(x) ) \right] \Implies vaccinated(x)$\\\\
+
+
+The sentence: "All airline passengers ...  day of travel" adds the requirement that everyone must be tested before the flight or be younger than 2 if travelling by air. Therefore rather than separating the whole air travel part into two separate portions, a simpler way is to start with the implication:
+\\\\
+$air(x)\Implies (younger(x) \Or tested(x))$
+\\\\
+The sentence: "Alternatively, travellers to ... days preceding travel" is quite ambiguous as it doesn't specify whether it is an alternative to the entire previously mentioned rules or if it is just an exception for the testing part. However since it follows the sentence about testing for air travel, it is assumed that the recovery documentation is a valid alternative to being tested. Therefore the statement is expanded to:
+\\\\
+$air(x)\Implies (younger(x) \Or tested(x) \Or recovered(x))$
+\\\\
+The sentence: "All  air  travellers ... the  United  States" could be represented with two implications:
+If traveling by air, if not a citizen, the passenger must be vaccinated and have proof.
+\\\\
+$air(x) \Implies (\Not(citizen(x)) \Implies [vaccinated(x)\And proof(x)])$
+\\\\
+This implication can be combined with the previous one using conjunction. This will create one implication that will combine all requirements for air travel with another implication handling the case of a non citizen:
+\\\\
+$air(x)\Implies [(younger(x)\Or tested(x) \Or recovered(x)) \And$\\
+$(\Not(citizen(x)) \Implies [vaccinated(x)\And proof(x)])]$
+\\\\
+The sentence: "In  addition, ... ports of entry and ferry terminals" could be interpreted as saying that not being a US citizen and being fully vaccinated are necessary to enter the US by land or sea. However this likely is not the case so the assumption was made that it is saying that being fully vaccinated is only necessary for non citizens that are entering by land or sea. Therefore the line was converted into the following: \\
+
+$\left[ (land(x)\Or ferry(x))\And \Not( citizen(x) ) \right] \Implies vaccinated(x)$\\\\
+
+Meaning that the passenger must be vaccinated if they are approaching from land or ferry and they are not a citizen.
+The two air and land/sea parts are separated by a conjunction. This way both implications must either be true or vacuously true for the person to be able to travel.
+\end{solution}
+\end{enumerate}
+\end{document}
+
