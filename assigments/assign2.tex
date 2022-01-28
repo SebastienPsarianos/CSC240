@@ -1,0 +1,251 @@
+\documentclass[11pt]{article}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage{comment}
+\includecomment{solution}
+\excludecomment{question}
+\setlength{\parskip}{1ex}
+\def\nats {{\mathbb N}}
+\def\ints {{\mathbb Z}}
+\newcommand{\Implies}{\mbox{ IMPLIES }}
+\newcommand{\Or}{\mbox{ OR }}
+\newcommand{\And}{\mbox{ AND }}
+\newcommand{\Not}{\mbox{NOT }}
+\newcommand{\Iff}{\mbox{ IFF }}
+\newcommand{\True}{\mbox{T}}
+\newcommand{\False}{\mbox{F}}
+\newcommand{\Neither}{\mbox{N}}
+\newcommand{\gor}{\mbox{ GOR }}
+\newcommand{\gand}{\mbox{ GAND }}
+\newcommand{\gnot}{\mbox{GNOT }}
+\newcommand{\grot}{\mbox{GROT }}
+\begin{document}
+\begin{center}
+\begin{solution}
+Solutions to
+\end{solution}
+{\bf \Large \bf CSC240 Winter 2022 Homework Assignment 2}\\
+\begin{question}
+due Thursday January 27, 2022
+\end{question}
+\end{center}
+\begin{solution}
+\noindent
+{\bf
+My name and student number:
+\\
+Sebastien Psarianos 1008596119}
+\\
+\medskip
+\noindent
+{\bf The list of people with whom I discussed this homework assignment: \\NO OUTSIDE DISCUSSION }\\
+\end{solution}
+\begin{enumerate}
+\item
+\begin{question}
+Consider the predicate
+$$(\forall i \in \ints. g(i,n)) \Implies \left[ (\exists x\in \ints. e(i,x))  \And
+\forall j \in \ints. (g(j,i) \Implies \forall y\in \ints. e(j,y))
+\right].$$
+Derive a logically equivalent predicate in Prenex Normal Form.
+Say which of the transformations listed on the slides in Lecture 4 you are using at
+each step of your derivation.\\
+\end{question}
+\begin{solution}
+Original Statement:
+$$(\forall i \in \ints. g(i,n)) \Implies \left[ (\exists x\in \ints. e(i,x))  \And
+\forall j \in \ints. (g(j,i) \Implies \forall y\in \ints. e(j,y))
+\right].$$
+
+Since $y$ does not occur in g(j,i) \\
+$E \Implies \forall x \in D.q(x)$ can be transformed to $\forall x \in D.(E \Implies q(x))$
+$$(\forall i \in \ints. g(i,n)) \Implies \left[ (\exists x\in \ints. e(i,x))  \And
+\forall j \in \ints.\forall y\in \ints. (g(j,i) \Implies  e(j,y))
+\right].$$
+
+Since $x$ does not occur in $\forall j \in \ints.\forall y\in \ints. (g(j,i) \Implies  e(j,y))$: \\
+$(\exists x\in D.p(x))\And E$ can be transformed to $\exists x\in D.(p(x)\And E)$
+$$(\forall i \in \ints. g(i,n)) \Implies\exists x\in \ints.\left[e(i,x)  \And
+ \forall j \in \ints.\forall y\in \ints. (g(j,i) \Implies  e(j,y))
+\right].$$
+
+Since $j$ and $y$ don't occur in $e(i,x))$: \\
+$E \And \forall x\in D.q(x)$ can be transformed to $\forall x\in D(E \And q(x))$ twice:
+$$(\forall i \in \ints. g(i,n)) \Implies \exists x\in \ints. \forall j \in \ints.\forall y\in \ints. \left[e(i,x)  \And
+ (g(j,i) \Implies  e(j,y))
+\right].$$
+
+Since $i$ exists in three places with two of them outside of the scope of the $\forall i\in\ints$ quantification, there are two not-quantified instances of $i$. Therefore let the quantified $i= i_1$ and the free variable $i=i_2$, giving:\\
+$$(\forall i_1 \in \ints. g(i_1,n)) \Implies \exists x\in \ints.\forall j \in \ints.\forall y\in \ints.\left[e(i_2,x)  \And
+ (g(j,i_2) \Implies  e(j,y))
+\right].$$
+
+Since $i_1$ does not occur in $\exists x\in \ints.\forall j \in\ints.\forall y\in \ints \left[ e(i_2,x)  \And (g(j,i_2) \Implies  e(j,y))\right]$ anymore:\\
+$(\forall x\in D.p(x)) \Implies E$ can be transformed to $\exists x\in D.(p(x)\Implies E)$
+$$\exists i_1 \in \ints. (g(i_1,n) \Implies \exists x\in \ints.\forall j \in \ints.\forall y\in \ints.\left[e(i_2,x)  \And
+ (g(j,i_2) \Implies  e(j,y))
+\right]).$$
+
+Since $x$ does not occur in $g(i_1,n)$:\\
+$E\Implies (\exists x\in D.q(x))$ can be transformed to $\exists x\in D.(E\Implies q(x))$
+$$\exists i_1 \in \ints.\exists x\in \ints.(g(i_1,n) \Implies \forall j \in \ints.\forall y\in \ints.\left[e(i_2,x)  \And
+ (g(j,i_2) \Implies  e(j,y))
+\right]).$$
+
+Since $j$ and $y$ do not occur in $g(i_1,n)$:\\
+$E\Implies (\forall x\in D.q(x))$ can be transformed to $\forall x\in D.(E\Implies q(x))$
+$$\exists i_1 \in \ints.\exists x\in \ints.\forall j \in \ints.\forall y\in \ints.(g(i_1,n) \Implies \left[e(i_2,x)  \And
+ (g(j,i_2) \Implies  e(j,y))
+\right]).$$
+
+\end{solution}
+\item
+\begin{question}
+The connectives AND and OR are functions from $\{\True,\False\} \times \{\True,\False\}$ to $\{\True,\False\}$
+and the connective NOT is a function from $\{\True,\False\}$ to $\{\True,\False\}$.
+Consider the following functions
+GAND,GOR\ :\ $\{ \True,\False,\Neither\} \times \{ \True,\False,\Neither\} \rightarrow \{ \True,\False,\Neither\}$ and \\
+GNOT,GROT\ :\ $\{ \True,\False,\Neither\}  \rightarrow \{ \True,\False,\Neither\}$
+that have the following generalized truth tables:
+\begin{center}
+\begin{tabular}{cccc}
+$P$ & $Q$ & $P$ GAND $Q$ & $P$ GOR $Q$\\
+\hline
+T & T & T & T\\
+T & N & N & T\\
+T & F & F & T\\
+N & T & N & T\\
+N & N & N & N\\
+N & F & F & N\\
+F & T & F & T\\
+F & N & F & N\\
+F & F & F & F
+\end{tabular}
+\ \ \ \ \ \ \begin{tabular}{ccc}
+$P$ &  GNOT $P$ & GROT $P$\\
+\hline
+T & F & N\\
+N & N & F\\
+F & T & T
+\end{tabular}
+\end{center}
+Note that GAND, GOR, and GNOT generalize  AND, OR, and NOT, respectively.
+A {\em generalized propositional formula} is an expression built up from variables
+using these four connectives
+(and brackets, when necessary, to avoid ambiguity).\\
+For example, $(P \gor (\grot Q)) \gand (\gnot R)$ is an example of a generalized
+propositional formula.
+\end{question}
+\begin{enumerate}
+\item
+\begin{question}
+Write every bijective function $f:\{\True,\False,\Neither\}  \rightarrow \{\True,\False,\Neither\}$
+as a generalized propositional formula.
+Briefly explain your answer.\\
+\end{question}
+\begin{solution}
+$\forall i \in \{1,2,3,4,5,6\}.(f_i: \{\True,\False,\Neither\}, \rightarrow \{\True,\False,\Neither\})$\\
+
+$f_1(x) = x$\\
+$f_1(\True) = \True$, $f_1(\Neither) = \Neither$, $f_1(\False) = \False$\\\\
+$f_2(x) = \gnot x$\\
+$f_2(\True) = \False$, $f_2(\Neither) = \Neither$, $f_2(\False) = \True$\\\\
+$f_3(x) = \grot x$\\
+$f_3(\True) = \Neither$, $f_3(\Neither) = \False$, $f_3(\False) = \True$\\\\
+$ f_4(x) = \grot(\gnot x)$\\
+$f_4(\True) = \True$, $f_4(\Neither) = \False$, $f_4(\False) =\Neither$\\\\
+$ f_5(x) = \gnot(\grot x)$\\
+$f_5(\True) = \Neither$, $f_5(\Neither) = \True$, $f_5(\False) = \False$\\\\
+$ f_6(x) = \gnot (\grot (\gnot x))$\\
+$f_6(\True) = \False$, $f_6(\Neither) = \True$, $f_6(\False) = \Neither$\\\\
+There are $P(3,3)= 6$ possible bijective functions with an domain and range sets of size of 3.\\
+
+$f_1$: Every element mapped to itself
+
+ $f_2$ and $f_2$: $\gnot$ and $\grot$ are bijective functions themselves of domain and range $\{\True,\False,\Neither\}, \rightarrow \{\True,\False,\Neither\}$.\\
+$f_4$,$f_5$ and $f_6$: The other 3 possible bijective functions of domain and range $\{\True,\False,\Neither\}, \rightarrow \{\True,\False,\Neither\}$, they can be represented by combinations of $\gnot$ and $\grot$. \\\\
+$\gnot$ provides the ability to map a $\True$ input to a $\False$ input and vice versa. $\grot$ provides the ability to map $\True$ input to $\Neither$ and by extension, in conjunction with $\gnot$, provides the ability to map $\False$ input to $\Neither$. Once the appropriate input is mapped to $\Neither$, $\gnot$ can be used if needed to reverse the order of which elements are mapped to $\True$ and $\False$. \\
+With these two functions any bijective function can be created for domain and range $\{\True,\False,\Neither\}, \rightarrow \{\True,\False,\Neither\}$ as shown above in. $f_{1\rightarrow6}$ \\\\
+\end{solution}
+\item
+\begin{question}
+Write every constant function $f:\{\True,\False,\Neither\}  \rightarrow \{\True,\False,\Neither\}$
+as a generalized propositional formula.
+Briefly explain your answer.\\\\
+\end{question}
+\begin{solution}
+$\forall i \in \{7,8,9\}.(f_i: \{\True,\False,\Neither\}, \rightarrow \{\True,\False,\Neither\})$\\
+
+$f_7(x) = x \gor \left[(\gnot x) \gor (\gnot(\grot x)\right]$\\
+$f_7(\True) = \True$, $f_7(\False) = \True$, $f_7(\Neither) = \True$\\\\
+$f_8(x)= \gnot (x \gor \left[(\gnot x) \gor (\gnot(\grot x))\right])$\\
+$f_8(\True) = \False$, $f_8(\False) = \False$, $f_8(\Neither)=\False$\\\\
+$f_9(x) = \grot(x \gor \left[(\gnot x) \gor (\gnot(\grot x))\right])$\\
+$f_9(\True) = \Neither$, $f_9(\False) = \Neither$, $f_9(\Neither) = \Neither$\\\\
+There are three possible constant functions with domain and range of $\{\True,\False,\Neither\}, \rightarrow \{\True,\False,\Neither\}$. \\\\
+$f_7$: The function $f_7$ always outputs $\True$, this is because the $\gor$ function will always output $\True$ if the either of the inputs are true. If the input is $\True$ then the $x$ part will be $\True$. If the Input is $\False$ then the $\gnot x$ part will be $\True$. If the input is $\Neither$, the $\gnot(\grot x)$ part will be true (as shown in $f_4$)\\\\
+$f_8$: The $\gnot$ function is applied to the output of $f_7$. Since $\gnot$ maps $\True$ to $\False$, the always $\True$ output of $f_7$ is converted to $\False$.\\\\
+$f_9$: The $\grot$ function is applied to the output of $f_7$. Since $\grot$ maps $\True$ to $\Neither$, the always $\True$ output of $f_7$ is converted to $\Neither$.
+\end{solution}
+\item
+\begin{question}
+Explain why every other function $f:\{\True,\False,\Neither\}  \rightarrow \{\True,\False,\Neither\}$
+can be written as a generalized propositional formula.
+Note that you are not being asked to write each of these functions as as a
+generalized propositional formula.\\\\
+\end{question}
+\begin{solution}
+Let a mapper be a function $g_i: \{\True,\False,\Neither\}  \rightarrow \{\True,\False,\Neither\}$ of the form:\\
+$$f_a \gand f_b$$\\
+Where the functions $f_a$ and $f_b$ are two functions from the bijectives defined above ($f_{1\rightarrow 6}$)\\\\
+A mapper is a function that outputs one specific output (\textbf{programmed-output}) if a specific input is provided (\textbf{programmed-input}), and output $\False$ for all other input values. A mapper can take any input from the domain of the function $\{\True,\False,\Neither\}  $ and can "convert" it to $\True$ or $\Neither$.
+\\\\
+Both functions in a mapper will be from the bijective functions $f_{1\rightarrow 6}$ defined above. The two bijective functions in the mapper must both output the \textbf{programmed-output} when the \textbf{programmed-input} is supplied. Since there are always two bijective functions that satisfy this criteria for any \textbf{programmed-input}/\textbf{programmed-output} combo, both of these functions will be on either side of the$\gand$.
+\\\\
+If the mapper's input is not the \textbf{programmed-input}, it will always output $\False$. This is due to the fact that both possible inputs that are not the \textbf{programmed-input} will output $\False$ in one of the two bijective functions within the mapper. If either bijective function is $\False$, the output of the mapper will be $\False$.
+\\\\
+Using these mappers, you can create a generalized propositional formula of the form:\\
+$$(f_a \gand f_b) \gor (f_c \gand f_d) \gor (f_e \gand f_f)$$ \\
+Where the functions $f_{a\rightarrow f}$ are various functions from the bijectives defined above ($f_{1\rightarrow 6}$)\\\\
+For any input to this formula, every mapper that isn't provided with its \textbf{programmed-input} will return $\False$. Since each mapper is separated by a $\gor$, the value that the overall formula will output will be either the \textbf{programmed-output} of the one mapper that was not $\False$ (the one with that \textbf{programmed-input} or the entire formula will be false. Any input can be mapped to false by simply not including a mapper with that \textbf{programmed-input}.
+\\\\
+All other functions of this domain and range can be made from 1-3 of these mappers.\\
+\end{solution}
+\item
+\begin{question}
+Give an example of a function $f:\{\True,\False,\Neither\}  \rightarrow \{\True,\False,\Neither\}$ that cannot be written as
+a generalized propositional formula using only the connectives GAND, GOR, and GNOT.
+Justify your answer.\\\\
+\end{question}
+\begin{solution}
+The function defined above, $f_9$ is an example of a function of domain and range $\{\True,\False,\Neither\}, \rightarrow \{\True,\False,\Neither\}$ that cannot be defined without $\grot$. This is because without $\grot$, there is no way to map $\True$ to $\Neither$. $\gnot$ only allows the swapping of $\True$ and $\False$ values. The only way that $\gand$ and $\gor$ output $\Neither$ is if they have at least one input that is $\Neither$. Therefore there is no way to create a function that maps $\True$ to $\Neither$ without $\grot$.\\
+\end{solution}
+\item
+\begin{question}
+How many different functions from $\{ \True,\False,\Neither\} \times \{ \True,\False,\Neither\}$ to $\{ \True,\False,\Neither\}$ are there?\\\\
+\end{question}
+\begin{solution}
+The cartesian product $\{ \True,\False,\Neither\} \times \{ \True,\False,\Neither\}$ results in a set with $3
+\times 3=9$ elements. Therefore the domain set has size $9$ and the range set has size $3$. Since there are $3$ possible outputs for each input, there are $3^9=19683$ possible functions.\\
+\end{solution}
+\item
+\begin{question}
+Explain why every function from $\{ \True,\False,\Neither\} \times \{ \True,\False,\Neither\}$ to $\{ \True,\False,\Neither\}$
+can be written
+as a generalized propositional formula.\\\\
+\end{question}
+\begin{solution}
+Let $g_i: \{\True, \False, \Neither\} \rightarrow \{\True, \False, \Neither\}$ represent the mapper defined in part $C$\\
+Given inputs $x$ and $y$ all $9$ individual pairs of inputs can be mapped to an output as follows:
+$$g_1(x)\gand g_2(y)$$
+The pair of mappers $g_1$ and $g_2$ must have the same \textbf{programmed-output}, however they can have different \textbf{programmed-inputs}. For example, if $x$ and $y$ had values $\True$ and $\Neither$ respectively and the desired function should output $\Neither$ with this combination of inputs:\\\\
+The mapper $g_1$ would have \textbf{programmed-input}:$\True$ and \textbf{programmed-output}:$\Neither$\\
+The mapper $g_2$ would have \textbf{programmed-input}:$\Neither$ and \textbf{programmed-output}:$\Neither$.\\\\
+As shown previously if either $x$ or $y$ are not each mapper's \textbf{programmed-input} ($x \ne \True$ or $y\ne \Neither$), then that respective mapper would be $\False$, making the entire statement $\False$.\\\\
+ Otherwise, the above combination of mappers allows any combination of inputs to be mapped to any output. This can be done by connecting each pair of mappers with a$\gor$ statement. Only the pair of mappers that has the correct \textbf{programmed-input} for both inputs can possibly output its \textbf{programmed-output}. As previously, if the desired output for a specific $x$ and $y$ combination is $\False$, the pair of mappers for that input can be omitted. eg:\\\\
+$$(g_1(x)\gand g_2(y))\gor(g_3(x)\gand g_4(y))\gor(g_5(x)\gand g_6(y))$$\\
+By including 1-9 of these when required to output $\True$ or $\Neither$ for a specific pair of inputs, any function from $\{ \True,\False,\Neither\} \times \{ \True,\False,\Neither\}$ to $\{ \True,\False,\Neither\}$ can be defined.
+\end{solution}
+\end{enumerate}
+\end{enumerate}
+\end{document}
