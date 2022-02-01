@@ -1,0 +1,53 @@
+\documentclass[11pt]{article}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\pagestyle{empty}
+\setlength{\parskip}{1ex}
+\setlength{\parindent}{0in}
+
+\def\nats{{\mathbb N}}
+\def\ints{{\mathbb Z}}
+\newcommand{\Implies}{\mbox{ IMPLIES }}
+\newcommand{\And}{\mbox{ AND }}
+\newcommand{\Iff}{\mbox{ IFF }}
+\newcommand{\Or}{\mbox{ OR }}
+\newcommand{\Not}{\mbox{NOT }}
+
+\begin{document}
+
+{\bf \large Quiz 3}
+
+\noindent
+Here is a proof that $\forall x \in \ints. \exists y \in \ints. (x(x+1) = 2y)$
+using the following fact.\\[5pt]
+{\bf Lemma} $\forall u \in \ints. \exists v \in \ints. [ (u = 2v) \Or (u= 2v-1)]$.
+
+\noindent
+After each semicolon (;) in the proof, justify why the line is true
+(for example, state what proof technique is being used)
+and  which earlier lines are being used, if any.
+
+\begin{tabbing}
+XXX\=XX\=XX\=XX\=XX\=XX\=XX\=\kill
+ 1.\>\>Let $x \in \ints$ be arbitrary.\\[5pt]
+ 2.\>\>$\exists v \in \ints. [ (x = 2v) \Or (x= 2v+1)]$;\\[5pt]
+ 3.\>\>\>Let $v$ be such that $(x = 2v) \Or (x= 2v-1)$;\\[5pt]
+ 4.\>\>\>\> Assume  $x = 2v$.\\[5pt]
+ 5.\>\>\>\>$x(x+1) = 2v(x+1)$; \\[5pt]
+ 6.\>\>\>\>\>Let $y =v(x+1)$.\\[5pt]
+ 7.\>\>\>\>\>$x(x+1) = 2y$; \\[5pt]
+ 8.\>\>\>\>$\exists y \in \ints. (x(x+1) = 2y)$; \\[5pt]
+ 9. \>\>\>$(x = 2v) \Implies \exists y \in \ints. (x(x+1) = 2y)$; \\[5pt]
+10.\>\>\>\>Assume  $x = 2v-1$.\\[5pt]
+11.\>\>\>\>$x+1 = 2v$; \\[5pt]
+12.\>\>\>\>$x(x+1) = x2v$;\\[5pt]
+13.\>\>\>\>$x2v = 2xv$; \\[5pt]
+14.\>\>\>\>$x(x+1) = 2xv$; \\[5pt]
+15.\>\>\>\>\>Let $y = xv$.\\[5pt]
+16.\>\>\>\>\>$x(x+1) = 2y$; \\[5pt]
+17.\>\>\>\>$\exists y \in \ints. (x(x+1) = 2y)$; \\[5pt]
+18.\>\>\>$(x = 2v-1) \Implies \exists y \in \ints. (x(x+1) = 2y)$; \\[5pt]
+19.\>\>\>$\exists y \in \ints. (x(x+1) = 2y)$; \\[5pt]
+20.\>$\forall x \in \ints. \exists y \in \ints. (x(x+1) = 2y)$;
+\end{tabbing}
+\end{document}

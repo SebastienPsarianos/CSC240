@@ -1,0 +1,163 @@
+\documentclass[11pt]{article}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage{mathrsfs}
+\usepackage{comment}
+\includecomment{solution}
+\includecomment{question}
+\setlength{\parindent}{0ex}
+\setlength{\parskip}{1ex}
+\def\nats {{\mathbb N}}
+\def\ints {{\mathbb Z}}
+\newcommand{\Implies}{\mbox{ IMPLIES }}
+\newcommand{\Or}{\mbox{ OR }}
+\newcommand{\And}{\mbox{ AND }}
+\newcommand{\Not}{\mbox{NOT }}
+\newcommand{\Iff}{\mbox{ IFF }}
+\newcommand{\True}{\mbox{T}}
+\newcommand{\False}{\mbox{F}}
+\newcommand{\Subsets}[1]{\mathscr{P}_{#1}(\{1,\ldots N\})}
+
+% Environment for writing formal proofs======================================
+%
+% \nl ends line and makes next line a Numbered Line
+% \ul ends line and makes next line an Unnumbered Line
+% \n increases the level of indentation ("next")
+% \p decreases the level of indentation ("previous")
+%\firstline  to number the first line of a proof
+%
+% Example:
+%
+% 1     let $x \in \nats$ be arbitrary
+% 2         let $y = x+1 \in \nats$
+% 3         $y > x$; property of $\nats$, 2
+% 4      $\exists y \in \nats. (y > x)$; construction 2, 3
+% 5  $\forall x \in \nats. \exists y \in \nats. (y > x)$; generalization 1,4
+%
+
+% this can be typed as follows:
+%
+% \begin{formal}
+% \firstline          <--- to number the first line of a proof
+% \n \label{gen-start} let $x \in \nats$ be arbitrary \nl
+% \n let $y = x+1 \in \nats$ \label{defy} \nl
+% $y > x$; property of $\nats$, \lref{defy} \label{gt} \nl
+% \p $\exists y \in \nats. (y > x)$; \label{inside} construction \lref{defy},\lref{gt} \nl
+% \p $\forall x \in \nats. \exists y \in \nats. (y > x)$; generalization \lref{gen-start}, \lref{inside}
+% \end{formal}
+%
+% You can use \labels anywhere in the code and \lref to refer to the line
+% number.  (This is done using smartref package.)
+%
+%to reset the line numbering counter:
+%\setcounter{linenum}{0}
+
+\usepackage{smartref} % for referencing the line numbers
+\newcounter{linenum}
+\addtoreflist{linenum}
+\def\codeTabSpace{\hspace*{4mm}}
+\newenvironment{formal}%
+{\begin{tabbing}%
+\codeTabSpace \= \hspace*{20mm} \= \hspace*{20mm} \= \hspace*{20mm} \= \kill%
+}%
+{\end{tabbing}%
+}
+\newcounter{ind}
+\newcommand{\n}{\addtocounter{ind}{5}\hspace*{5mm}}
+\newcommand{\p}{\addtocounter{ind}{-5}\hspace*{-5mm}}
+\newcommand{\nl}{\\\stepcounter{linenum}{\scriptsize \arabic{linenum}}\>\hspace*{\value{ind}mm}}
+\newcommand{\ul}{\\\>\hspace*{\value{ind}mm}}
+\newcommand{\bl}{\\[-1.5mm]\>\hspace*{\value{ind}mm}}
+\newcommand{\firstline}{\stepcounter{linenum}{\scriptsize \arabic{linenum}}\>}
+\newcommand{\lref}[1]{\linenumref{#1}} % use this to refer to a line number
+% End of environment for writing formal proofs=====================================
+
+\begin{document}
+\begin{center}
+Solutions to\\
+{\bf \Large \bf CSC240 Winter 2022 Homework Assignment 3}
+\end{center}
+
+\begin{solution}
+\noindent
+{\bf My name and student number:}
+
+\medskip
+
+\noindent
+{\bf The list of people with whom I discussed this homework assignment:}\\
+\end{solution}
+
+
+\begin{question}
+A  family $\cal F$ of subsets of $\{1,\ldots n\}$ is a {\em cover} for a subset $S \subseteq \{1,\ldots n\}$ if each element of $S$ is an element of at least one set in $\cal F$.\\
+A family $\cal F$ of subsets of $\{1,\ldots n\}$ is {\em 2-cover-free} if, for each set $S \in \cal F$,
+no family of two other sets in $\cal F$ is a cover for $S$.\\
+
+For any $e \in \ints^+$ and any subset $X \in {\mathcal P}(\ints^+)$, let MEMBER($e,X$) =  ``$e$ is an element of $X$''.\\
+For every  family  $\cal F$ of subsets of $\{1,\ldots n\}$,
+the predicate 2CF($\cal F$) = ``$\cal F$ is 2-cover-free'' can be written in predicate logic as
+$$\begin{array}{ll}
+\forall S \in {\cal F}. \Not \exists X \in {\cal F}. \exists Y \in {\cal F}. & [(\Not (X=S)) \And (\Not(Y=S)) \And \\
+& \forall e \in S.({\rm MEMBER}(e,X) \Or {\rm MEMBER}(e,Y)) ].
+\end{array}$$
+
+For any positive integer $k\leq N$, let $\Subsets{k}$ denote the set of all
+subsets of $\{1,\ldots N\}$ of size at most $k$.\\
+A family ${\cal F}$ of subsets of $\{1,\ldots N\}$ is $k$-{\em selective} if, for every set $S \in \Subsets{k}$ and every element
+$e \in S$, there is a set $T \in \cal F$ such that $S \cap T = \{e\}$.\\
+For example, if $N = 6$, then ${\cal F} = \{\{1,2\},\{3,4\},\{5,6\},\{1,3,5\},\{2,4,6\}\}$ is 2-selective.\\
+
+For every  family  $\cal F$ of subsets of $\{1,\ldots N\}$ and every positive integer $k\leq N$, the predicate\\
+SEL(${\cal F},k)$ =  ``$\cal F$ is $k$-selective'' can be written in predicate logic as
+$$\begin{array}{ll}
+\forall S \in \Subsets{k}. \forall e \in S. \exists T \in {\cal F}. & [{\rm MEMBER}(e,T) \And\\
+& \forall d \in S. ({\rm MEMBER}(d,T) \Implies (d=e))]
+\end{array}$$
+
+Let $M$ be a Boolean matrix with $n$ rows and $N$ columns.\\
+For each $i \in \{1,\ldots,n\}$, let $R_i = \{ j \in \{1,\ldots,N\} \ |\
+M[i,j] = 1\}$.\\
+Then ${\cal R} = \{ R_i \ |\ i \in \{1,\ldots,n\}\}$ is a family
+of sets over $\{1,\ldots,N\}$.\\
+Similarly, for each $j \in \{1,\ldots,N\}$, let $C_j = \{ i \in \{1,\ldots,n\} \ |\
+M[i,j] = 1\}$.\\
+Then ${\cal C} = \{ C_j \ |\ j \in \{1,\ldots,N\}\}$ is a family
+of sets over $\{1,\ldots,n\}$.
+
+For example, if
+$$M = \left [
+\begin{array}{cccc}
+0 & 1 & 0 & 1\\
+1 & 1 & 0 & 0\\
+1 & 0 & 1 & 1
+\end{array}
+\right ]$$
+then ${\cal R} = \{\{2,4\}, \{1,2\}, \{1,3,4\}\}$ and
+${\cal C} = \{\{2,3\}, \{1,2\}, \{3\}, \{1,3\}\}$.
+\end{question}
+
+\begin{enumerate}
+\item
+\begin{question}
+Give an informal proof that, if $\cal R$ is 3-selective, then $\cal C$ is 2-cover-free.
+\end{question}
+
+\begin{solution}
+\end{solution}
+
+\item
+\begin{question}
+Formally prove  ${\rm SEL}({\cal R},3) \Implies {\rm 2CF}({\cal C})$.
+Each line of your proof should be numbered.
+Do only one step each line.
+Explicitly state what proof technique is being
+applied and say which earlier lines are being used.
+Use appropriate indentation. Your proof must be at most 100 lines long.
+\end{question}
+
+\begin{solution}
+
+\end{solution}
+\end{enumerate}
+\end{document}
