@@ -140,12 +140,22 @@ ${\cal C} = \{\{2,3\}, \{1,2\}, \{3\}, \{1,3\}\}$.
 \begin{enumerate}
 \item
 \begin{question}
-Give an informal proof that, if $\cal R$ is 3-selective, then $\cal C$ is 2-cover-free.
+Give an informal proof that, if $\cal R$ is 3-selective, then $\cal C$ is 2-cover-free.\\\\
 \end{question}
 
-\begin{solution}
-\end{solution}
+\null\quad Assume that $\cal{R}$ is 3-selective: $\forall S \in \Subsets{3}. \forall e \in S. \exists T \in {\cal R}. [{\rm MEMBER}(e,T) \And$ \\
+\null\qquad$ \forall d \in S. ({\rm MEMBER}(d,T)\Implies (d=e))]$ \\
+\null\quad Therefore: $\forall S \in \Subsets{3}. \forall e \in S. \exists T \in {\cal R}.{\rm MEMBER}(e,T)$ is a tautology\\
+\null\quad For this statement to be a tautology, every element in $\{1,...,N\}$ must be present within at \\
+\null\qquad least one set within ${\cal R}$ since every value $\{1,...,N\}$ occurs in a set $S$ within the family\\
+\null\qquad $\Subsets{3}$. Therefore, every row in the matrix will have at least \\\\
 
+% \null\qquad $\forall S \in \Subsets{3}. \forall e \in S. \exists T \in {\cal R}.\forall d \in S. ({\rm MEMBER}(d,T)\Implies (d=e))]$\\
+% \null\qquad are both tautologies
+
+
+1. Same amount of elements per column. (sum of column is the same)\\
+2. Same number of differences row to row.
 \item
 \begin{question}
 Formally prove  ${\rm SEL}({\cal R},3) \Implies {\rm 2CF}({\cal C})$.
@@ -153,10 +163,19 @@ Each line of your proof should be numbered.
 Do only one step each line.
 Explicitly state what proof technique is being
 applied and say which earlier lines are being used.
-Use appropriate indentation. Your proof must be at most 100 lines long.
+Use appropriate indentation. Your proof must be at most 100 lines long.\\\\
 \end{question}
 
 \begin{solution}
+If $\cal{R}$ is 3-selective then there must be at least one $1$ in each column\\\\
+
+\begin{formal}
+\firstline
+\n Assume ${\rm SEL}({\cal R},3)$\nl
+\p $\forall S \in \Subsets{3}. \forall e \in S. \exists T \in {\cal R}. [{\rm MEMBER}(e,T) \And \forall d \in S. ({\rm MEMBER}(d,T)$\ul
+    $\Implies (d=e))]$\nl
+${\rm MEMBER}(e,T)$: Use of conjunction 2\nl
+\end{formal}
 
 \end{solution}
 \end{enumerate}
