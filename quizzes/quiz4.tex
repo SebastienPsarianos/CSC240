@@ -1,0 +1,60 @@
+\documentclass[11pt]{article}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\pagestyle{empty}
+\setlength{\parskip}{1ex}
+\setlength{\parindent}{0in}
+\usepackage{comment}
+
+
+\def\nats{{\mathbb N}}
+\def\ints{{\mathbb Z}}
+\includecomment{solution}
+\includecomment{question}
+\setlength{\parskip}{1ex}
+\newcommand{\Implies}{\mbox{ IMPLIES }}
+\newcommand{\And}{\mbox{ AND }}
+\newcommand{\Iff}{\mbox{ IFF }}
+\newcommand{\Or}{\mbox{ OR }}
+\newcommand{\Not}{\mbox{NOT }}
+
+\begin{document}
+
+{\bf \large Quiz 4}
+
+\begin{question}
+The Fibonacci sequence
+$$0,1,1,2,3,5,8,12,21, \ldots$$
+starts with the numbers 0 and 1 and each successive element is the sum of the two previous elements.
+This sequence can be written as
+$$F(0), F(1), F(2), \ldots$$
+where
+$F:\nats \rightarrow \nats$ is defined
+as follows:\\
+$F(0) = 0$,\\
+$F(1) = 1$, and\\
+for all $n \geq 2$, $F(n) = F(n-1) + F(n-2)$.
+
+
+Prove by induction that,  for all nonnegative integers $n$,
+$$F(n)  = \frac{a^n -b^n}{\sqrt{5}}$$
+where $a = (1+\sqrt{5})/2$ and $b = (1-\sqrt{5})/2$ are the roots of the equation $x^2 - x -1 =0$.\\
+\end{question}
+\begin{solution}
+{\bf Solution}:\\
+{\bf{Claim}}: $\forall n\in N_{\ge1}.Q(n)$. Where $Q(n): N\rightarrow \{T,F\} = \left (n = \frac{a^n - b^n}{\sqrt 5}\right )$. Where: $a=\frac{1+\sqrt 5}{2},$ $b=\frac{1+\sqrt 5}{2}$\\\\
+{\bf Cases:}\\
+\null\quad$Q(1):\frac{a^1-b^1}{\sqrt 5} = \frac{(1+\sqrt 5) - (1-\sqrt 5)}{2\sqrt 5} = \frac{2\sqrt 5}{2\sqrt 5}= 1 = F(1)$. Therefore $Q(1)$ holds\\\\
+\null\quad$Q(2):\frac{a^2-b^2}{\sqrt 5} = \frac{(\frac{1+\sqrt 5}{2})^2 - (\frac{1-\sqrt 5}{2})^2}{\sqrt 5}= \frac{(1 + 2\sqrt 5 + 5)- (1-2\sqrt 5 + 5)}{4\sqrt 5} = \frac{4\sqrt 5}{4\sqrt 5} = 1 = F(2)$.\\\\
+\null\qquad Therefore $Q(2)$ holds\\\\
+{\bf Induction hypothesis}: Let $k\ge1$ be an integer and assume that $Q(i)$ is true  for any value \\\null\quad $1\le i\le k$\\\\
+\null\quad$Q(k).k\ge3$: By the I.H, and since $k\ge3$, it follows that $Q(k-1)$ and $Q(k-2)$ both hold\\
+\null\qquad true.\\
+\null\qquad Therefore $F(k-1) = \frac{a^{k-1}-b^{k-1}}{\sqrt 5}$ and $F(k-2) = \frac{a^{k-2}-b^{k-2}}{\sqrt 5}$\\
+\null\qquad Since by the definition of the fibonacci sequence, $F(k) = F(k-1) + F(k-2)$, it follows that\\\\
+\null\qquad $F(k) = \frac{a^{k-1}-b^{k-1}}{\sqrt 5} + \frac{a^{k-2}-b^{k-2}}{\sqrt 5} = \frac{((\frac{1+\sqrt 5}{2})^{k-1}-(\frac{1-\sqrt 5}{2})^{k-1}) + ((\frac{1+\sqrt 5}{2})^{k-2}-(\frac{1-\sqrt 5}{2})^{k-2})}{\sqrt 5} = \frac{\frac{1+\sqrt 5}{2}^k -\frac{1-\sqrt 5}{2}^k}{\sqrt 5}=\\$
+\null\qquad $\frac{a^k -b^k}{\sqrt 5}$: Therefore $Q(k)$ holds true.\\\\
+By induction $\forall n\in N_{\ge1}.Q(n)$
+
+\end{solution}
+\end{document}

@@ -4,7 +4,7 @@
 \usepackage{mathrsfs}
 \usepackage{comment}
 \includecomment{solution}
-\includecomment{question}
+\excludecomment{question}
 \setlength{\parindent}{0ex}
 \setlength{\parskip}{1ex}
 \def\nats {{\mathbb N}}
@@ -140,22 +140,25 @@ ${\cal C} = \{\{2,3\}, \{1,2\}, \{3\}, \{1,3\}\}$.
 \begin{enumerate}
 \item
 \begin{question}
-Give an informal proof that, if $\cal R$ is 3-selective, then $\cal C$ is 2-cover-free.\\\\
+Give an inforal proof that, if $\cal R$ is 3-selective, then $\cal C$ is 2-cover-free.\\\\
 \end{question}
 
-\null\quad Assume that $\cal{R}$ is 3-selective: $\forall S \in \Subsets{3}. \forall e \in S. \exists T \in {\cal R}. [{\rm MEMBER}(e,T) \And$ \\
-\null\qquad$ \forall d \in S. ({\rm MEMBER}(d,T)\Implies (d=e))]$ \\
-\null\quad Therefore: $\forall S \in \Subsets{3}. \forall e \in S. \exists T \in {\cal R}.{\rm MEMBER}(e,T)$ is a tautology\\
-\null\quad For this statement to be a tautology, every element in $\{1,...,N\}$ must be present within at \\
-\null\qquad least one set within ${\cal R}$ since every value $\{1,...,N\}$ occurs in a set $S$ within the family\\
-\null\qquad $\Subsets{3}$. Therefore, every row in the matrix will have at least \\\\
+If any set $X\in\Subsets{3}$ containing the element $e$ is a subset of another set in $S\in\Subsets{3}$ where
+$S\cap T=e$, then $X\cap T = e$. $T\in{\cal F}$\\
+This is because since $X\subset S$, there are no elements in $X$ that are not in $S$ and since all elements in $S$ except $e$ were excluded, the intersection will be the same for both\\\\
+$\forall S\in\Subsets{3}.\forall e\in S(\exists T\in {\cal F}.T\cap S = e) \Implies\\
+((\forall X\in \Subsets{3}.(X \subset S\And {\rm MEMBER}(e,X)) \Implies (X\cap T) = e$))\\\\
 
-% \null\qquad $\forall S \in \Subsets{3}. \forall e \in S. \exists T \in {\cal R}.\forall d \in S. ({\rm MEMBER}(d,T)\Implies (d=e))]$\\
-% \null\qquad are both tautologies
+With this, it can be concluded that if all $S\in\Subsets{3}$ of cardinality 3 have corresponding sets in ${\cal F}$ with an intersection of each element within $S$, then the same will be true for all other sets within $\Subsets{3}$. \\
+$\forall S\in \Subsets{3}.\forall e\in S.\exists T\in {\cal F}.(|S| = 3 \And S\cap T=e) \Implies \\
+(\forall X\in \Subsets{3}.\forall x\in X.\exists Y\in {\cal F}.(|X|< 3 \Implies X\cap Y = e))$\\\\
+
+\null\quad Assume ${\rm SEL}({\cal R}, 3)$.\\
+\null\quad For every value $e\in S$ where $S\in \Subsets{3}$ there exists $T\in {\cal R}$ where \\
+\null\quad ${\rm MEMBER}(e,T)\And \exists T \in {\cal F}. [{\rm MEMBER}(e,T) \And$\\
+\null\quad $\forall d \in S. ({\rm MEMBER}(d,T) \Implies (d=e))]$\\\\
 
 
-1. Same amount of elements per column. (sum of column is the same)\\
-2. Same number of differences row to row.
 \item
 \begin{question}
 Formally prove  ${\rm SEL}({\cal R},3) \Implies {\rm 2CF}({\cal C})$.
@@ -167,15 +170,6 @@ Use appropriate indentation. Your proof must be at most 100 lines long.\\\\
 \end{question}
 
 \begin{solution}
-If $\cal{R}$ is 3-selective then there must be at least one $1$ in each column\\\\
-
-\begin{formal}
-\firstline
-\n Assume ${\rm SEL}({\cal R},3)$\nl
-\p $\forall S \in \Subsets{3}. \forall e \in S. \exists T \in {\cal R}. [{\rm MEMBER}(e,T) \And \forall d \in S. ({\rm MEMBER}(d,T)$\ul
-    $\Implies (d=e))]$\nl
-${\rm MEMBER}(e,T)$: Use of conjunction 2\nl
-\end{formal}
 
 \end{solution}
 \end{enumerate}

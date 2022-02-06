@@ -1,0 +1,86 @@
+\documentclass[11pt]{article}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage{mathrsfs}
+\usepackage{comment}
+\excludecomment{ignore}
+\includecomment{solution}
+\includecomment{question}
+\setlength{\parindent}{0ex}
+\setlength{\parskip}{1ex}
+\def\nats {{\mathbb N}}
+\def\ints {{\mathbb Z}}
+\newcommand{\Implies}{\mbox{ IMPLIES }}
+\newcommand{\Or}{\mbox{ OR }}
+\newcommand{\And}{\mbox{ AND }}
+\newcommand{\Not}{\mbox{NOT }}
+\newcommand{\Iff}{\mbox{ IFF }}
+\newcommand{\True}{\mbox{T}}
+\newcommand{\False}{\mbox{F}}
+\newcommand{\Subsets}[1]{\mathscr{P}_{#1}(\{1,\ldots N\})}
+
+\begin{document}
+\begin{center}
+Solutions to\\
+{\bf \Large \bf CSC240 Winter 2022 Homework Assignment 4}
+\end{center}
+
+\noindent
+{\bf My name and student number:}\\
+
+\medskip
+
+\noindent
+{\bf The list of people with whom I discussed this homework assignment:}\\
+
+
+\begin{enumerate}
+\item
+\begin{question}
+For any nonempty string of bits $b \in \{0,1\}^+$,
+let $f(b)$ be the string of bits obtained by
+inserting a 0 to the right of the leftmost bit in $b$ and then, if the string contains at least one 1,
+changing the rightmost 1 to 0 and changing all the bits to its right to 1.\\
+For example, $f(11) = 100$, $f(100)  = 0111$, and $f(0111) = 00110$.
+
+Prove, using induction, that for all $b \in \{0,1\}^+$,  there exists $i \in \nats$ such that $f^{(i)}(b) \in \{0\}^+$
+ is a nonempty string containing only 0's.
+In other words, if you repeatedly apply the function $f$, eventually you will get a nonempty string containing only 0's.
+Note that $f^{(0)}(b) = b$ for all nonempty strings $b \in \{0,1\}^+$.
+\end{question}
+
+\begin{solution}
+{\bf Solution:}\\
+
+\end{solution}
+
+
+\item
+\begin{question}
+In one turn, a knight on a chessboard can either move two squares horizontally and one square vertically
+or move two squares vertically and one square horizontally.
+\end{question}
+
+\begin{enumerate}
+\item
+\begin{question}
+Using induction, prove that, for all $n \geq 3$, starting from every square on the border of an $n \times n$ chessboard, there is a sequence of turns that allows the knight to reach the square in the lower left corner.
+\end{question}
+
+\begin{solution}
+{\bf Solution:}\\
+\end{solution}
+
+\item
+\begin{question}
+For $n \in \{1,2\}$, is it true that, starting from every square on the border of an $n \times n$ chessboard, there is a sequence of turns
+that allows the knight to reach the square in the lower left corner? Justify your answer.
+\end{question}
+
+\begin{solution}
+{\bf Solution:}\\
+
+\end{solution}
+\end{enumerate}
+\end{enumerate}
+\end{document}
