@@ -52,6 +52,56 @@ Note that $f^{(0)}(b) = b$ for all nonempty strings $b \in \{0,1\}^+$.
 
 \begin{solution}
 {\bf Solution:}\\
+${\rm LENGTH}(b,n):\{0,1\}^+\times\nats\rightarrow \{T,F\}$ The string $b$ contains $n$ numbers\\\\
+$P: \{\nats \rightarrow \{T,F\}\}$ For every binary string of length $n$, there exists a natural number $i$ so that it can be reduced to a string containing only $0$s by applying $f$ to it $i$ times.\\
+$P(n)= \forall b\in\{0,1\}^+.\left[{\rm LENGTH}(b,n) \Implies \left(\exists i\in\nats.f^{(i)}(b)\in\{0\}^+\right)\right]$\\\\
+
+Let $n\in\nats$ be arbitrary\\
+\null\quad Assume that $\forall k\in\nats.\left[k<n \Implies P(k)\right]$ (Induction Hypothesis)\\\\
+\null\quad Case 1: $n=0$\\
+\null\qquad Let $b\in\{0,1\}^+$ be an arbitrary binary string.\\
+\null\qquad\quad Assume ${\rm LENGTH}(b,0)$\\
+\null\qquad\quad Choose $i=0$ such that: $f^0(b) = b$.\\
+\null\qquad\quad Since $b$ is empty: $b\in\{0\}^+$.\\
+\null\qquad\quad Therefore $\exists i\in \nats.f^{(i)}(b)\in\{0\}^+$\\
+\null\qquad Therefore ${\rm LENGTH}(b,0) \Implies \left[\exists i\in \nats.f^{(i)}(b)\in\{0\}^+\right]$\\
+\null\quad $\forall b\in \{0,1\}^+\left({\rm LENGTH}(b,0) \Implies \left[\exists i\in\nats.f^{(i)}(b)\in\{0\}^+\right]\right)$.\\
+\null\quad Therefore $P(0)$
+\\\\
+\null\quad Case 2: $n>0$\\
+\null\quad Since $n>0$ and by the I.H, $P(n-1)$\\
+\null\qquad Let $b\in\{0,1\}^+$ be an arbitrary binary string.\\
+\null\qquad\quad Assume ${\rm LENGTH}(b,n)$ \\
+\null\qquad\quad Since $n>1$ let $b'$ be the string $b$ with the last bit removed.\\
+\null\qquad\quad The string $b'$ has a length of $n-1$\\
+\null\qquad\quad The first bit in $b$ is either a $0$ or a $1$.\\
+\null\qquad\qquad Assume the first bit in $b$ is a $1$\\\\
+\null\qquad\qquad Every time the $f$ is applied to the binary string two things happen:\\
+\null\qquad\qquad A zero is added to the right of the first bit, increasing the value of the string by\\
+\null\qquad\qquad $2^{z+1} - 2^z$ (where $z$ is the length of the string before $f$ was applied). \\
+\null\qquad\qquad The rightmost $1$ is removed and subsequent bits become $1$s reducing the value of the\\
+\null\qquad\qquad string by $x\ge1$ unless $b\in\{0\}^+$. \\
+\null\qquad\qquad By the I.H $\exists i\in \nats.f(b')\in\{0\}^+$ meaning that eventually every bit that was a \\
+\null\qquad\qquad part of $b'$ will be removed. When this happens, since only $0$s are added to the string,\\
+\null\qquad\qquad the string will be a $1$ followed by only $0$s. \\
+\null\qquad\qquad Applying the function again, the first bit will turn into a zero and every subsequent\\
+\null\qquad\qquad bit will become a $1$. The numerical value of the string won't increase when applying\\
+\null\qquad\qquad $f$ subsequent times. The string will always start with $0$s. \\
+\null\qquad\qquad The step of the function that removes the last bit will continue to reduce the value\\
+\null\qquad\qquad of the function every time $f$ is applied resulting in the value eventually reaching $0$.\\
+\null\qquad\quad $b_0= 0 \Implies \exists i\in\nats.f^{(i)}(b)\in\{0\}^+$\\\\
+\null\qquad\qquad Assume the first bit in $b$ is $0$\\
+\null\qquad\qquad Considering the nuerical value of the binary string, if the string starts with a zero,\\
+\null\qquad\qquad adding $0$s after the first bit will not affect the value of the string. \\
+\null\qquad\qquad However the  removal of the rightmost bit and changing of the subsequent values to \\
+\null\qquad\qquad $1$ will always reduce the value of the string by at least $1$. Since the value is decreasing\\
+\null\qquad\qquad every time $f$ is applied, it will eventually reach $0$ and the string will only contain $0$s. \\
+\null\qquad\quad $b_0= 0 \Implies \exists i\in\nats.f^{(i)}(b)\in\{0\}^+$\\\\
+\null\qquad ${\rm LENGTH}(b,n)\Implies \exists i\in\nats.f^{(i)}(b)\in\{0\}^+$\\\\
+\null\quad $\forall b \in\{0,1\}^+.{\rm LENGTH}(b,n)\Implies \exists i\in\nats.f^{(i)}(b)\in\{0\}^+$\\
+\null\quad Therefore, $P(n)$ \\\\
+By induction $\forall n\in\nats.P(n)$
+\\\\
 
 \end{solution}
 
@@ -70,7 +120,80 @@ Using induction, prove that, for all $n \geq 3$, starting from every square on t
 
 \begin{solution}
 {\bf Solution:}\\
-Use postage stamp problem
+Let $p(n): \nats\rightarrow\{T,F\}=$ It is possible to get to the bottom left corner of a $n\times n$ chessboard starting at any point on the border.\\\\
+Let $n\in\nats$ be arbitrary.\\
+\null\quad Assume that $\forall k\in\nats.\left[3\le k<n\Implies P(k)\right]$\\\\
+\null\qquad {\bf Case 1: $n = 3$}\\
+\null\qquad Define an edge as one row or column on the board where every square is part of the\\
+\null\qquad border. On a $3\times3$ board every edge has 3 squares (2 corners and 1 middle square)\\\\
+\null\qquad For every corner, there is a unique pair of edges that don't contain that corner.\\
+\null\qquad (opposing sides)\\
+\null\qquad If the knight is on a corner, it can move to the middle square of either of\\
+\null\qquad its opposing sides. (2 moves along an edge 1 towards the centre) \\\\
+\null\qquad For every edge, there is a unique pair of corners that are not part of that edge.\\
+\null\qquad (opposing corners)\\
+\null\qquad If the knight is in the middle square of an edge, it can always move to the two \\
+\null\qquad opposing corners (one move along its edge and two moves toward the corner).\\\\
+\null\qquad Given two corners that are on the same edge ($a$ and $b$). Corner $a$ and $b$ will \\
+\null\qquad always share one opposing edge. The middle square of the shared opposing edge  \\
+\null\qquad can be reached from both $a$ and $b$, therefore you can always move from $a$ to $b$ by  \\
+\null\qquad visiting the middle opposing square. This works in both directions. \\\\
+\null\qquad By doing this repeatedly in the same direction, it is possible to reach every  \\
+\null\qquad corner on the board from any other corner.\\
+\null\qquad Since there are two opposing corners for every middle square on an edge, you can \\
+\null\qquad always make it to a corner from a middle square of an edge.\\\\
+\null\qquad Since for a $3\times 3$ board any square on the border is either a middle square or   \\
+\null\qquad a corner, it is possible to get to any corner from any spot on the border and by \\
+\null\qquad extension it is always possible to get to the bottom left corner.\\
+\null\quad Therefore $P(3)$\\\\
+\null\qquad {\bf Case 2: $n=4$}\\
+\null\qquad A $4\times4$ board is a $3\times3$ board with one column added to the right and one row\\
+\null\qquad added to the top.\\
+\null\qquad On the left border every square except the top one is part of the $3\times 3$ board's\\
+\null\qquad border, therefore by the I.H if the knight is placed on these squares then it is able \\
+\null\qquad to reach the bottom left square.\\
+\null\qquad The same holds for the bottom border and the rightmost square.\\
+
+\null\qquad If the knight is placed on the top left corner then it can be moved down 1 and right\\
+\null\qquad  2 to end up on the $3\times3$ board's border.\\
+\null\qquad If the knight is placed to the right of the top left corner then it can be moved down \\
+\null\qquad 2 and right 1 to end up on the $3\times3$ board's border.\\
+\null\qquad If the knight is placed to the left of the top right corner or on the top right corner\\
+\null\qquad  then it can be moved down 1 and left 2 to end up on the $3\times3$ board's border.\\
+\null\qquad If the knight is placed below the top right corner, then it can be moved left 1 and \\
+\null\qquad down 2 to end up on the $3\times3$ board's border.\\
+\null\qquad If the knight is placed above the bottom right corner, then it can be moved left 2 \\
+\null\qquad and down 1 to end up on the $3\times3$ board's border.\\
+\null\qquad If the knight is placed on the bottom right corner then it can be moved left 1 and \\
+\null\qquad up 2 to end up on the $3\times3$ board's border.\\
+\null\qquad Therefore from any point on the border of the $4\times4$ board, the border of the $3\times3$\\
+\null\qquad board can be reached and by the I.H, the bottom left square can be reached.\\
+\null\quad Therefore $P(4)$\\\\
+\null\qquad {\bf Case 3: $n > 3$}\\
+\null\qquad The $n\times n$ board is a $(n-1)\times(n-1)$ board with a column and row added to the\\
+\null\qquad right and top respectively.\\
+\null\qquad Let the outer board refer to the $n\times n$ board and the inner board refer to the\\
+\null\qquad $(n-1)\times (n-1)$ board.\\
+\null\qquad In this configuration, the bottom left square of the inner board overlaps with the\\
+\null\qquad bottom left square of the outer board.\\\\
+\null\qquad Since the knight must be on the border, it will either be on the border of the\\
+\null\qquad inner board or it will be on one of the two rows that aren't shared with the inner \\
+\null\qquad board.\\\\
+\null\qquad If the knight is on the border of the inner board, by the I.H it is possible to move it\\
+\null\qquad to the bottom left square of the inner board which the same as the bottom left \\
+\null\qquad square of the outer board.\\\\
+\null\qquad If the knight is not on the border of the inner board, then it must be on either \\
+\null\qquad the top row or the rightmost column.\\
+\null\qquad From all positions on the top row move the knight down 1 and 2 right or left\\
+\null\qquad depending its current column. (right works if there are $\ge 3$ columns to the \\
+\null\qquad right or left works if there $\ge 2$ columns to the left)\\
+\null\qquad This will always leave the knight on the border of the inner board. By the I.H it is\\
+\null\qquad now possible to move to the bottom left corner.\\
+\null\qquad The same holds for the right column but with one move to the left and the same\\
+\null\qquad rules for moving up and down.\\
+\null\quad Therefore $P(n).n>4$\\\\
+$\forall n\in\nats.P(n)$, by strong induction\\\\
+
 \end{solution}
 
 \item
@@ -81,7 +204,10 @@ that allows the knight to reach the square in the lower left corner? Justify you
 
 \begin{solution}
 {\bf Solution:}\\
-
+It is possible on a $1\times1$ chessboard. The single square could be considered to be the bottom-left square. Therefore since there is only one square that the knight can be placed, it can always reach the bottom-left square with 0 moves.\\
+Therefore $P(1)$\\\\
+It is not possible on a $2\times2$ chessboard. This is because for the knight to move it must have at least 3 squares in a row. Therefore if the knight is placed on a square that is not the bottom left one, it is impossible for it to move to another square. \\
+Therefore $\Not(P(2))$
 \end{solution}
 \end{enumerate}
 \end{enumerate}

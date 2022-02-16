@@ -1,0 +1,161 @@
+\documentclass[11pt]{article}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage{mathrsfs}
+\usepackage{comment}
+\excludecomment{ignore}
+\includecomment{solution}
+\includecomment{question}
+\setlength{\parindent}{0ex}
+\setlength{\parskip}{1ex}
+\def\nats {{\mathbb N}}
+\def\ints {{\mathbb Z}}
+\newcommand{\Implies}{\mbox{ IMPLIES }}
+\newcommand{\Or}{\mbox{ OR }}
+\newcommand{\And}{\mbox{ AND }}
+\newcommand{\Not}{\mbox{NOT }}
+\newcommand{\Iff}{\mbox{ IFF }}
+\newcommand{\True}{\mbox{T}}
+\newcommand{\False}{\mbox{F}}
+\newcommand{\Subsets}[1]{\mathscr{P}_{#1}(\{1,\ldots N\})}
+
+\begin{document}
+\begin{center}
+Solutions to\\
+{\bf \Large \bf CSC240 Winter 2022 Homework Assignment 5}
+\end{center}
+
+\noindent
+{\bf My name and student number:}\\
+Sebastien Psarianos 1008596119
+\medskip
+
+\noindent
+{\bf The list of people with whom I discussed this homework assignment:}\\
+NO OUTSIDE DISCUSSION
+
+\begin{question}
+Consider the following three recursively defined sets of strings of $p$'s and $q$'s:\\
+ \\
+Base Case: $\lambda \in R$\\
+Constructor Case: if $x,y \in R$, then $pxqy, qxpy \in R$.\\
+ \\
+Base Case: $\lambda \in S$\\
+Constructor Case: if $x,y \in S$, then $pxq, qxp, xy \in S$.\\
+ \\
+Base Case: $\lambda \in U$\\
+Constructor Case: if $x \in U$, then $pqx, qpx, pxq, qxp, xpq, xqp \in U$.\\
+ \\
+Let $T$ denote the set of all strings $w \in \{p,q\}^*$ of $p$'s and $q$'s containing the same number
+of $p$'s and $q$'s.
+\end{question}
+
+\begin{enumerate}
+\item
+\begin{question}
+Use structural induction to prove that $R \subseteq S$.
+\end{question}
+
+\begin{solution}
+{\bf Solution:}\\\\
+{\bf  Proof by structural induction}.\\
+Define $P(n): \{p,q\}^* \rightarrow \{T,F\}=\exists a\in S.\left([x=paq]\Or[x=qap]\Or[\exists b\in S.(x=ab)]\right)$\\\\
+Base Case:\\
+\null\quad Assume $n=\lambda$\\
+\null\quad $\lambda$ is the base case in the definition of $S$, $\lambda\in S$\\
+\null\quad $P(\lambda)$\\\\
+Constructor Cases:\\
+\null\quad Let $x,y\in R$ be arbitrary\\
+\null\qquad Assume $P(x)$\\
+\null\qquad $\exists a\in S.\left([x=paq]\Or[x=qap]\Or[\exists b\in S.(x=ab)]\right)$\\
+\null\qquad\quad Assume $P(y)$\\
+\null\qquad\quad $\exists c\in S.\left([y=pcq]\Or[y=qcp]\Or[\exists d\in S.(y=ac)]\right)$\\
+\null\qquad\qquad Let $z = pxqy$\\
+\null\qquad\qquad
+
+\end{solution}
+
+\item
+\begin{question}
+Use structural induction to prove that $S \subseteq T$.
+\end{question}
+
+\begin{solution}
+{\bf Solution:}\\
+{\bf  Proof by structural induction}.\\
+{\bf Definitions:}\\
+$N_q(n) \{p,q\}^* \rightarrow \nats = $ Number of occurances of $q$ in $n$\\
+$N_p(n) \{p,q\}^* \rightarrow \nats = $ Number of occurances of $p$ in $n$\\
+$P(n): \{p,q\}^* \rightarrow \{T,F\}= \left[N_q(n) = N_p(n) \right]$\\\\
+{\bf Base Case:}\\
+\null\quad Assume $n=\lambda$\\
+\null\quad $\lambda$ contains $0$ $p$ and $0$ $q$ \\
+\null\quad $P(\lambda)$\\\\
+{\bf Constructor Cases:}\\
+\null\quad Let $x,y\in S$ be arbitrary\\\\
+\null\qquad Assume $P(x)$\\
+\null\qquad $N_q(x) = N_p(x)$\\
+\null\qquad $N_q(pxq) = N_q(x) + 1=N_p(x) + 1= N_p(pxq)$\\
+\null\qquad $N_q(pxq) = N_p(pxq)$\\
+\null\quad Therefore $P(x)\Implies P(pxq)$\\\\
+\null\qquad Assume $P(x)$ (I.H)\\
+\null\qquad $N_q(x) = N_p(x)$ by the (I.H)\\
+\null\qquad $N_q(qxp) = N_q(x) + 1=N_p(x) + 1= N_p(qxp)$\\
+\null\qquad $N_q(qxp) = N_p(qxp)$\\
+\null\quad Therefore $P(x)\Implies P(pxq)$\\\\
+\null\qquad Assume $P(x)\And P(y)$ (I.H)\\
+\null\qquad $N_q(xy) = N_q(x) + N_q(y)$\\
+\null\qquad $N_p(xy) = N_p(x) + N_p(y)$\\
+\null\qquad By the I.H $\left[N_q(x) = N_p(x)\right]\And\left[N_q(y) = N_p(y)\right]$\\
+\null\qquad Therefore $N_q(xy) = N_p(xy)$\\
+\null\quad Therefore $(P(x)\And P(y))\Implies P(pxq)$\\\\
+By structural induction $\forall n\in S.P(n)$\\
+Every element in $S$ has equal occurances of $p$ and $q$, and by extension is in the set $T$
+\end{solution}
+
+\item
+\begin{question}
+Use strong induction to prove that $T \subseteq R$.
+\end{question}
+
+\begin{solution}
+{\bf Solution:}\\
+{\bf Proof by Strong Induction: }\\\\
+{\bf Definitions:}\\
+$Q(n): \{p,q\}^*\rightarrow\{T,F\} = $ $n$ is an element in $R$\\
+$P(n): \nats \rightarrow \{T,F\} = \forall b\in T.\left[(|z| = n) \Implies Q(n) \right]$\\\\
+{\bf Base Cases: }\\
+Case 1: $n=0$ \\
+\null\quad Let $b\in T$ be arbitrary.\\
+\null\qquad Assume that $|b| = 0$ \\
+\null\qquad $b$ must be the empty string $\lambda$\\
+\null\qquad By the base case of $R$, $Q(\lambda)$\\
+\null\quad Therefore $|b|=0\Implies Q(b)$\\
+Since $b$ is arbitrary $\forall b\in T.\left[(|b|=0)\Implies Q(b)\right]$\\
+$P(0)$\\\\
+Case 2: $n=1$ \\
+\null\quad Let $b\in T$ be arbitrary.\\
+\null\quad By the definition of $T$, $b$ must contain equal occurances of $p$ and $q$.\\
+\null\quad Therefore $|b| = 1$ is false and $\left[(|b|=1)\Implies Q(b)\right]$ is vacuously true.\\
+Since $b$ is arbitrary $\forall b\in T.\left[(|b|=1)\Implies Q(b)\right]$\\
+$P(1)$\\\\
+{\bf Induction Step: }\\
+Let $n\in \nats$ be arbitrary\\
+\null\quad Assume $\forall k\in T,\left(k<n \Implies P(k)\right)$\\
+\null\quad
+\\
+
+By strong induction: $\forall n\in R. P(n)$\\
+\end{solution}
+
+\item
+\begin{question}
+Prove that $U \neq R$.
+\end{question}
+
+\begin{solution}
+{\bf Solution:}\\
+
+\end{solution}
+\end{enumerate}
+\end{document}

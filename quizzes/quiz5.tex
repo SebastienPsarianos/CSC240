@@ -1,0 +1,62 @@
+\documentclass[11pt]{article}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage{xcolor}
+\pagestyle{empty}
+\setlength{\parskip}{1ex}
+\setlength{\parindent}{0in}
+\usepackage{comment}
+\usepackage{graphicx}
+
+\def\nats{{\mathbb N}}
+\def\ints{{\mathbb Z}}
+\includecomment{solution}
+\includecomment{question}
+\excludecomment{ignore}
+\setlength{\parskip}{1ex}
+\newcommand{\Implies}{\mbox{ IMPLIES }}
+\newcommand{\And}{\mbox{ AND }}
+\newcommand{\Iff}{\mbox{ IFF }}
+\newcommand{\Or}{\mbox{ OR }}
+\newcommand{\Not}{\mbox{NOT }}
+
+\begin{document}
+
+{\bf \large Quiz 5}
+
+\begin{question}
+Let $E$ be the following recursively defined set of arithmetical
+expressions with the variable $x$:\\
+Base case: $x \in  E$\\
+Constructor cases: If $e,e' \in E$, then $(e + e') \in E$ and $(e \times e') \in E$.
+
+Prove by structural induction that, for every $e \in E$,
+there exist $a, b \in \nats$ such that
+$e \leq a x^b$.
+\end{question}
+
+\begin{solution}
+{\bf Solution}:\\
+Let $P(n): \nats\rightarrow\{T,F\}$ = $\exists a,b\in\nats.(n\le ax^b)$  \\\\
+{\bf Base Case: $E=\{x\}$}\\
+\null\quad Choose $a=2,b=2$\\
+\null\quad $x\le 2x^2$\\
+\null\quad $P(x)$\\
+$\forall n\in\{x\}.P(n)$\\\\
+{\bf Constructor Cases}: \\
+\null\quad Assume that $\forall n\in E.P(n)$ I.H\\
+\null\qquad Let $e$ and $e'$ be arbitrary elements in $E$ where $e \ge e'$\\
+\null\qquad $\exists c,d\in N.(e\le cx^d)$ By I.H\\
+\null\qquad $\exists f,g\in N.(e'\le fx^g)$ By I.H\\
+\null\qquad Choose $a = (c+ f)$, $b = (d+g)$\\
+\null\qquad $(e+e') \le cx^d + fx^g \le (c+f)x^{d+g}$\\
+\null\quad $\forall e,e'\in E.P(e' + e)$\\\\
+\null\qquad Let $e$ and $e'$ be arbitrary elements in $E$\\
+\null\qquad $\exists c,d\in N.(e\le cx^d)$ By I.H\\
+\null\qquad $\exists f,g\in N.(e'\le fx^g)$ By I.H\\
+\null\qquad Choose $a = (cf)$, $b = (d+g)$\\
+\null\qquad $(e\times e') \le cx^d \times fx^g$ = $(cf)x^{d+g}$\\
+\null\quad $\forall e,e'\in E.P(e' \times e)$\\\\
+By structrural induction $\forall e\in E.P(e)$
+\end{solution}
+\end{document}
