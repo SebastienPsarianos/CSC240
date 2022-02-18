@@ -58,20 +58,28 @@ Use structural induction to prove that $R \subseteq S$.
 
 \begin{solution}
 {\bf Solution:}\\\\
-{\bf  Proof by structural induction}.\\
-Define $P(n): \{p,q\}^* \rightarrow \{T,F\}=\exists a\in S.\left([x=paq]\Or[x=qap]\Or[\exists b\in S.(x=ab)]\right)$\\\\
-Base Case:\\
+{\bf  Proof by structural induction}.\\\\
+{\bf Definitions: }\\
+$P(n): R\rightarrow\{T,F\} = $ $n$ is an element in $S$\\\\
+{\bf Base Case:}\\
 \null\quad Assume $n=\lambda$\\
 \null\quad $\lambda$ is the base case in the definition of $S$, $\lambda\in S$\\
 \null\quad $P(\lambda)$\\\\
-Constructor Cases:\\
-\null\quad Let $x,y\in R$ be arbitrary\\
-\null\qquad Assume $P(x)$\\
-\null\qquad $\exists a\in S.\left([x=paq]\Or[x=qap]\Or[\exists b\in S.(x=ab)]\right)$\\
-\null\qquad\quad Assume $P(y)$\\
-\null\qquad\quad $\exists c\in S.\left([y=pcq]\Or[y=qcp]\Or[\exists d\in S.(y=ac)]\right)$\\
-\null\qquad\qquad Let $z = pxqy$\\
-\null\qquad\qquad
+{\bf Constructor Cases}:\\
+\null\quad Let $w,z\in R$ be arbitrary\\\\
+\null\qquad Assume $P(w)\And P(z)$ (I.H)\\
+\null\qquad By the I.H, $w,z\in S$\\
+\null\qquad By $S$'s constructor case $pxq$, $p\cdot w\cdot q\in S$.\\
+\null\qquad By $S$'s constructor case $xy$ and since $pwq\in S$, $pwq\cdot z\in S$.\\
+\null\qquad Therfore $P(pwqz)$\\
+\null\quad Therefore $[P(w)\And P(z)]\Implies P(pwqz)$\\\\
+\null\qquad Assume $P(w)\And P(z)$ (I.H)\\
+\null\qquad By the I.H, $w,z\in S$\\
+\null\qquad By $S$'s constructor case $qxp$, $q\cdot w\cdot p\in S$.\\
+\null\qquad By $S$'s constructor case $xy$ and since $qwp\in S$, $qwp\cdot z\in S$.\\
+\null\qquad Therfore $P(qwpz)$\\
+\null\quad Therefore $[P(w)\And P(z)]\Implies P(qwpz)$\\\\
+By structural induction, $\forall n\in R. P(n)$\\\\
 
 \end{solution}
 
@@ -82,7 +90,7 @@ Use structural induction to prove that $S \subseteq T$.
 
 \begin{solution}
 {\bf Solution:}\\
-{\bf  Proof by structural induction}.\\
+{\bf  Proof by structural induction}.\\\\
 {\bf Definitions:}\\
 $N_q(n) \{p,q\}^* \rightarrow \nats = $ Number of occurances of $q$ in $n$\\
 $N_p(n) \{p,q\}^* \rightarrow \nats = $ Number of occurances of $p$ in $n$\\
@@ -93,20 +101,20 @@ $P(n): \{p,q\}^* \rightarrow \{T,F\}= \left[N_q(n) = N_p(n) \right]$\\\\
 \null\quad $P(\lambda)$\\\\
 {\bf Constructor Cases:}\\
 \null\quad Let $x,y\in S$ be arbitrary\\\\
-\null\qquad Assume $P(x)$\\
-\null\qquad $N_q(x) = N_p(x)$\\
+\null\qquad Assume $P(x)$ (I.H)\\
+\null\qquad By the I.H: $N_q(x) = N_p(x)$\\
 \null\qquad $N_q(pxq) = N_q(x) + 1=N_p(x) + 1= N_p(pxq)$\\
 \null\qquad $N_q(pxq) = N_p(pxq)$\\
 \null\quad Therefore $P(x)\Implies P(pxq)$\\\\
 \null\qquad Assume $P(x)$ (I.H)\\
-\null\qquad $N_q(x) = N_p(x)$ by the (I.H)\\
+\null\qquad By the I.H: $N_q(x) = N_p(x)$ \\
 \null\qquad $N_q(qxp) = N_q(x) + 1=N_p(x) + 1= N_p(qxp)$\\
 \null\qquad $N_q(qxp) = N_p(qxp)$\\
 \null\quad Therefore $P(x)\Implies P(pxq)$\\\\
 \null\qquad Assume $P(x)\And P(y)$ (I.H)\\
 \null\qquad $N_q(xy) = N_q(x) + N_q(y)$\\
 \null\qquad $N_p(xy) = N_p(x) + N_p(y)$\\
-\null\qquad By the I.H $\left[N_q(x) = N_p(x)\right]\And\left[N_q(y) = N_p(y)\right]$\\
+\null\qquad By the I.H: $\left[N_q(x) = N_p(x)\right]\And\left[N_q(y) = N_p(y)\right]$\\
 \null\qquad Therefore $N_q(xy) = N_p(xy)$\\
 \null\quad Therefore $(P(x)\And P(y))\Implies P(pxq)$\\\\
 By structural induction $\forall n\in S.P(n)$\\
@@ -122,8 +130,10 @@ Use strong induction to prove that $T \subseteq R$.
 {\bf Solution:}\\
 {\bf Proof by Strong Induction: }\\\\
 {\bf Definitions:}\\
-$Q(n): \{p,q\}^*\rightarrow\{T,F\} = $ $n$ is an element in $R$\\
-$P(n): \nats \rightarrow \{T,F\} = \forall b\in T.\left[(|z| = n) \Implies Q(n) \right]$\\\\
+$Q(z): T\rightarrow\{T,F\} = $ $z$ is an element in $R$\\\\
+Since $T$ has equal occurances of $p$ and $q$, $\forall b\in T.\exists m\in \nats. |b| = 2m$ where $m$ is the amount of $p$s or $q$s\\
+To prove $\forall n\in \nats.Q(n)$ for each specific string length, define $P(n)$ as:\\
+$P(n): \nats \rightarrow \{T,F\} = \forall z\in T.\left[(|z| = 2n) \Implies Q(z) \right]$\\\\
 {\bf Base Cases: }\\
 Case 1: $n=0$ \\
 \null\quad Let $b\in T$ be arbitrary.\\
@@ -131,21 +141,30 @@ Case 1: $n=0$ \\
 \null\qquad $b$ must be the empty string $\lambda$\\
 \null\qquad By the base case of $R$, $Q(\lambda)$\\
 \null\quad Therefore $|b|=0\Implies Q(b)$\\
-Since $b$ is arbitrary $\forall b\in T.\left[(|b|=0)\Implies Q(b)\right]$\\
+Since $b$ is arbitrary $\forall b\in T.\left[(|b|=2(0))\Implies Q(b)\right]$\\
 $P(0)$\\\\
 Case 2: $n=1$ \\
 \null\quad Let $b\in T$ be arbitrary.\\
-\null\quad By the definition of $T$, $b$ must contain equal occurances of $p$ and $q$.\\
-\null\quad Therefore $|b| = 1$ is false and $\left[(|b|=1)\Implies Q(b)\right]$ is vacuously true.\\
-Since $b$ is arbitrary $\forall b\in T.\left[(|b|=1)\Implies Q(b)\right]$\\
+\null\qquad Assume that $|b|=2(1)$\\
+\null\qquad There are only two strings with 1 $p$ and 1 $q$: $pq$ and $qp$\\
+\null\qquad By the base case of $R$, $\lambda\in R$ \\
+\null\qquad By constructors $pxqy$ and $qxpy$, choose $x,y=\lambda$ giving $pq,qp\in R$ \\
+\null\qquad $Q(pq)\And Q(qp)$\\
+\null\quad Since $|b|=2(1)$ was assumed, $|b|=2(1)\Implies Q(b)$\\
+Since $b$ is arbitrary $\forall b\in T.\left[(|b|=2(1))\Implies Q(b)\right]$\\
 $P(1)$\\\\
 {\bf Induction Step: }\\
 Let $n\in \nats$ be arbitrary\\
-\null\quad Assume $\forall k\in T,\left(k<n \Implies P(k)\right)$\\
-\null\quad
-\\
+\null\quad Assume $\forall k\in \nats,\left(k<n \Implies P(k)\right)$ (I.H)\\
+\null\quad Let $b\in T$ be artbitrary \\
+\null\qquad Assume $|b| = 2n$ \\
+\null\qquad Since the base case for $R$ is $\lambda$, the strings $pq,qp\in R$ by constructor cases $pxqy$ and $qxpy$ \\
+\null\qquad when $x,y = \lambda$\\
+\null\qquad By the constructor case $\forall x,y\in R.Q(xy)$\\
+\null\qquad Since $n-1<n$, by the I.H. $\forall x\in T.\left[|x|=2(n-1)\Implies Q(b)\right]$. \\
 
-By strong induction: $\forall n\in R. P(n)$\\
+
+By strong induction: $\forall n\in \nats. P(n)$\\
 \end{solution}
 
 \item
