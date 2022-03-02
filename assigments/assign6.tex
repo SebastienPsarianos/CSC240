@@ -1,0 +1,140 @@
+\documentclass[11pt]{article}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage{mathrsfs}
+\usepackage{comment}
+\excludecomment{ignore}
+\includecomment{solution}
+\excludecomment{question}
+\setlength{\parindent}{0ex}
+\setlength{\parskip}{1ex}
+\def\nats {{\mathbb N}}
+\def\ints {{\mathbb Z}}
+\newcommand{\Implies}{\mbox{ IMPLIES }}
+\newcommand{\Or}{\mbox{ OR }}
+\newcommand{\And}{\mbox{ AND }}
+\newcommand{\Not}{\mbox{NOT }}
+\newcommand{\Iff}{\mbox{ IFF }}
+\newcommand{\True}{\mbox{T}}
+\newcommand{\False}{\mbox{F}}
+\newcommand{\Subsets}[1]{\mathscr{P}_{#1}(\{1,\ldots N\})}
+
+\begin{document}
+\begin{center}
+Solutions to\\
+{\bf \Large \bf CSC240 Winter 2022 Homework Assignment 6}
+\end{center}
+
+\noindent
+{\bf My name and student number:}\\
+Sebastien Psarianos 1008596119
+
+\medskip
+
+\noindent
+{\bf The list of people with whom I discussed this homework assignment:}\\
+NO OUTSIDE DISCUSSION
+
+
+\begin{enumerate}
+\item
+\begin{question}
+Consider the following  recursively defined set of numbers:\\
+ \\
+Base Case: $2 \in H$\\
+Constructor Case: if $h \in H$, then $2+\sqrt{h}  \in H$ and $2-\sqrt{h} \in H$.\\
+ \\
+Prove, using a well ordering proof, that this definition is unambiguous,\\
+i.e.~every number in $H$ can be obtained from the rules in only one way.\\
+ \\
+You may find it helpful to first prove upper and lower bounds on the numbers in $H$.
+\end{question}
+
+\begin{solution}
+{\bf Solution:}\\
+{\bf Lemma \#1:} Show $2$ is the only rational number in $H$ - Proof by structural induction:\\
+{\bf Definitions}:\\
+$F(h): H \rightarrow \{T,F\} = h\ne 2\Implies I(h)$\\
+$I(x): \mathbb{R} \rightarrow \{T,F\} = x$ is a irrational number\\\\
+{\bf Base Cases: }\\
+\null\quad Assume $h=2$\\
+\null\quad $Q(2)$\\
+\null\quad Since $2\ne2$ is false, $2\ne 2\Implies I(2)$ is vaccuously true.\\
+$F(2)$\\\\
+{\bf Constructor Cases: }\\
+\null\quad Let $h\in H$ be arbitrary:\\
+\null\qquad Assume $F(h)$ (I.H.)\\
+\null\qquad Case 1: $h = 2$\\
+\null\qquad By the I.H. $h\ne 2\Implies I(h)$\\
+\null\qquad Since $h=2$, $\Not I(h)$.\\
+\null\qquad $I(\sqrt 2)$: Axiom \\
+\null\qquad Addition/subtraction of a rational and irrational number is always irrational: Axiom\\
+\null\qquad Therefore $I(2\pm\sqrt2)$\\
+\null\qquad Case 2: $h\ne2$\\
+\null\qquad By the I.H. $h\ne 2\Implies I(h)$\\
+\null\qquad Since $h\ne2$, $I(h)$\\
+\null\qquad The square root of an irrational number is also irrational: Axiom\\
+\null\qquad Therefore $I(\sqrt h)$\\
+\null\qquad $\Not I(2)$: Axiom\\
+\null\qquad Addition/subtraction of a rational and irrational number is always irrational: Axiom:\\
+\null\qquad $I(2\pm\sqrt h)$\\
+\null\quad Therefore $F(h)\Implies F(2\pm\sqrt h)$\\
+Since $h$ is arbitrary, by structural induction $\forall h\in H.F(h)$\\
+Since every either constructor gives an irrational number no matter the input, there is only one way to obtain $2$. (The base case)\\\\
+{\bf Definitions:}\\
+$P(x): H\rightarrow \{T,F\} = $ The element $x$ can only be obtained from the rules in one way\\
+$x\preccurlyeq y: H\times H \rightarrow \{T,F\} =$ The number of times that a constructor was applied to make $x$ is less or equal to the amount for $y$ \\
+{\bf Proof:}\\
+Let $C =\{h\in H|\Not [P(h)]\}$\\
+$\preccurlyeq$ is a well ordering for $H$ with $2$ as the smallest element. Since $C\subseteq H$ $C$ is well ordered.\\
+\null\quad Assume on the contrary $C\ne\emptyset$ \\
+\null\quad Let $x$ be the smallest element in $C$ by $\preccurlyeq$\\
+\null\quad\quad Let $a\in H$ be arbitrary\\
+\null\qquad\quad Assume $a\preccurlyeq x$\\
+\null\qquad\quad As shown in the lemma \#1, the base case 2 can only be made in one way. The base \\
+\null\qquad\quad case is by definition less than $x$ with the well ordering $\preccurlyeq$. \\
+\null\qquad\quad Therefore there always exists a value $a\preccurlyeq x$ st $P(a)$\\
+\null\quad\quad $a\preccurlyeq x\Implies P(a)$\\
+\null\quad $\forall a\in H.(a\preccurlyeq x\Implies P(a))$\\
+\null\quad Since $x\in C$, it must be able to be made in two ways. There are three possibilities:  \\
+\null\qquad Case 1: $\exists a,b\in H.(2+\sqrt a = 2+\sqrt b = x)$\\
+\null\qquad $2+\sqrt a = 2+\sqrt b$\\
+\null\qquad $\sqrt a = \sqrt b$\\
+\null\qquad Since all values in $H$ are greater than $0$ as shown in lemma 2:\\
+\null\qquad $a = b$\\
+\null\qquad $a\preccurlyeq x$ and $b\preccurlyeq x$ by the definition of $\preccurlyeq$, therefore $P(a)$ and $P(b)$\\
+\null\qquad $a$ and $b$ are the same element obtained in the same way.\\
+\null\qquad $ 2+\sqrt a$ and $2+\sqrt b$ are the same constructor\\
+\null\qquad Case 2: $\exists a,b\in H.(2-\sqrt a = 2-\sqrt b = x)$ $a$ and $b$ obtained from the rules differently\\
+\null\qquad $-\sqrt a = -\sqrt b$\\
+\null\qquad Since all values in $H$ are greater than $0$ as shown in lemma 2:\\
+\null\qquad $a = b$\\
+\null\qquad $a\preccurlyeq x$ and $b\preccurlyeq x$ by the definition of $\preccurlyeq$, therefore $P(a)$ and $P(b)$\\
+\null\qquad This is a contradiction since $a$ and $b$ must be obtained differently\\
+\null\qquad Case 3: $\exists a,b\in H.(2+\sqrt a = 2-\sqrt b = x)$\\
+\null\qquad $2+\sqrt a = 2-\sqrt b$ \\
+\null\qquad $\sqrt a = -\sqrt b$\\
+\null\qquad This is a contradiction since the output of a square root is always positive: Axiom\\
+\null\quad Therefore there is no way to create the smallest element in $C$\\
+By the well ordering principle: $C=\emptyset$\\
+$\forall h\in H.P(h)$
+
+
+\end{solution}
+
+\item
+\begin{question}
+The set $S$ of strict binary trees can be defined inductively as follows:\\
+Base case: $\bullet$ is a strict binary tree, with $\bullet$ as its root\\
+Constructor case: If $t_1$ and $t_2$ are strict binary trees, then\\
+$\bullet$ is the root of the strict binary tree in which $\bullet$ is connected via edges to the roots of $t_1$ and $t_2$.\\
+
+Prove that the set of all strict binary trees is countable.
+\end{question}
+
+\begin{solution}
+{\bf Solution:}\\
+
+\end{solution}
+\end{enumerate}
+\end{document}

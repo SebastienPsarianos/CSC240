@@ -1,0 +1,55 @@
+\documentclass[11pt]{article}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage{xcolor}
+\pagestyle{empty}
+\setlength{\parskip}{1ex}
+\setlength{\parindent}{0in}
+\usepackage{comment}
+\usepackage{graphicx}
+
+\def\nats{{\mathbb N}}
+\def\ints{{\mathbb Z}}
+\includecomment{solution}
+\includecomment{question}
+\excludecomment{ignore}
+\setlength{\parskip}{1ex}
+\newcommand{\Implies}{\mbox{ IMPLIES }}
+\newcommand{\And}{\mbox{ AND }}
+\newcommand{\Iff}{\mbox{ IFF }}
+\newcommand{\Or}{\mbox{ OR }}
+\newcommand{\Not}{\mbox{NOT }}
+
+\begin{document}
+
+{\bf \large Quiz 6}
+
+\begin{question}
+Prove, using a well ordering proof, that $n^3 +2n$ is divisible by 3 for every natural number $n$.
+\end{question}
+
+\begin{solution}
+{\bf Solution}:\\
+{\bf Definition}\\
+$P(x): \nats \rightarrow \{T,F\} = \exists m \in\ints. x^3+2x = 3m$\\
+
+Claim: $\forall n\in \nats.P(n)$\\
+Let $C= \{n\in \nats|\Not(P(n))\}$ (the set of contradictions to the claim)\\
+\null\quad Assume on the contrary that $C\ne \emptyset$\\
+\null\quad By the Well Ordering principle since $\nats$  is well ordered, there exists a smallest element in $C$\\
+\null\qquad Let $x$ be this smallest value in $C$\\
+\null\qquad Therefore $\Not\left[\exists m\in\ints.x^3+2x= 3m\right]$\\\\
+\null\qquad Since $x$ is the smallest counterexample, $\forall y\in\nats.(y<x)\Implies P(y)$\\
+\null\qquad $0^3+2(0)=0$ which is divisible by 3 therefore $P(x-1)$ since there is at least one value less \\
+\null\qquad than $x$ that holds true.\\\\
+\null\qquad Therefore $\exists n\in\ints.(x-1)^3+2(x-1)=3n$\\
+\null\qquad $(x-1)^3+2(x-1)=x^3-3x^2+3x-1 + 2x-2= x^3+3x^2+5x-3$\\
+\null\qquad Subtracting $3x$ and adding $3$ to both sides $x^3+2x=3n-3x+3=3(n-x+1)$ \\
+\null\qquad Let $m=n-x+1$, $x^3+2x=3m$\\
+\null\qquad Since any addition or subtraction of integers and natural numbers gives\\
+\null\qquad an integer, $m\in\ints$\\
+\null\qquad $\exists m\in \ints.x^3+2x=3m$. This contradicts the assumption that $\Not(P(x))$\\\\
+\null\quad Therefore there is no smallest element $x\in C$\\
+Therefore by the well ordering principle  $C=\emptyset$\\
+\end{solution}
+\end{document}

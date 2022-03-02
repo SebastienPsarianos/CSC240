@@ -5,7 +5,7 @@
 \usepackage{comment}
 \excludecomment{ignore}
 \includecomment{solution}
-\includecomment{question}
+\excludecomment{question}
 \setlength{\parindent}{0ex}
 \setlength{\parskip}{1ex}
 \def\nats {{\mathbb N}}
@@ -79,12 +79,17 @@ $P(n): R\rightarrow\{T,F\} = $ $n$ is an element in $S$\\\\
 \null\qquad By $S$'s constructor case $xy$ and since $qwp\in S$, $qwp\cdot z\in S$.\\
 \null\qquad Therfore $P(qwpz)$\\
 \null\quad Therefore $[P(w)\And P(z)]\Implies P(qwpz)$\\\\
-By structural induction, $\forall n\in R. P(n)$\\\\
+By structural induction, $\forall n\in R. P(n)$\\
+\null \quad \\\\
+\null \quad \\\\
+\null \quad \\
 
 \end{solution}
 
 \item
 \begin{question}
+
+
 Use structural induction to prove that $S \subseteq T$.
 \end{question}
 
@@ -102,23 +107,28 @@ $P(n): \{p,q\}^* \rightarrow \{T,F\}= \left[N_q(n) = N_p(n) \right]$\\\\
 {\bf Constructor Cases:}\\
 \null\quad Let $x,y\in S$ be arbitrary\\\\
 \null\qquad Assume $P(x)$ (I.H)\\
+\null\qquad Since 1 $q$ is added: $N_q(pxq) = N_q(x) + 1$ \\
+\null\qquad Since 1 $p$ is added: $N_p(pxq) = N_p(x) + 1$\\
 \null\qquad By the I.H: $N_q(x) = N_p(x)$\\
-\null\qquad $N_q(pxq) = N_q(x) + 1=N_p(x) + 1= N_p(pxq)$\\
-\null\qquad $N_q(pxq) = N_p(pxq)$\\
-\null\quad Therefore $P(x)\Implies P(pxq)$\\\\
+\null\qquad $N_q(pxq) = N_p(pxq) = N_q(x) + 1 = N_p(x) + 1$\\
+\null\qquad $P(pxq)$\\
+\null\quad Since $P(x)$ was assumed: $P(x)\Implies P(pxq)$\\\\
 \null\qquad Assume $P(x)$ (I.H)\\
-\null\qquad By the I.H: $N_q(x) = N_p(x)$ \\
-\null\qquad $N_q(qxp) = N_q(x) + 1=N_p(x) + 1= N_p(qxp)$\\
-\null\qquad $N_q(qxp) = N_p(qxp)$\\
-\null\quad Therefore $P(x)\Implies P(pxq)$\\\\
+\null\qquad Since 1 $q$ is added: $N_q(qxp) = N_q(x) + 1$\\
+\null\qquad Since 1 $p$ is added: $N_p(qxp) = N_p(x) + 1$ \\
+\null\qquad By the I.H: $N_q(x) = N_p(x)$\\
+\null\qquad $N_q(qxp) = N_p(qxp) = N_q(x) + 1 = N_p(x) + 1$\\
+\null\qquad $P(qxp)$\\
+\null\quad Since $P(x)$ was assumed: $P(x)\Implies P(qxp)$\\\\
 \null\qquad Assume $P(x)\And P(y)$ (I.H)\\
 \null\qquad $N_q(xy) = N_q(x) + N_q(y)$\\
 \null\qquad $N_p(xy) = N_p(x) + N_p(y)$\\
 \null\qquad By the I.H: $\left[N_q(x) = N_p(x)\right]\And\left[N_q(y) = N_p(y)\right]$\\
-\null\qquad Therefore $N_q(xy) = N_p(xy)$\\
+\null\qquad $N_q(xy) = N_p(xy)$\\
 \null\quad Therefore $(P(x)\And P(y))\Implies P(pxq)$\\\\
 By structural induction $\forall n\in S.P(n)$\\
-Every element in $S$ has equal occurances of $p$ and $q$, and by extension is in the set $T$
+Every element in $S$ has equal occurances of $p$ and $q$, and by extension is in the set $T$\\\\
+\null \quad \\\\
 \end{solution}
 
 \item
@@ -158,10 +168,20 @@ Let $n\in \nats$ be arbitrary\\
 \null\quad Assume $\forall k\in \nats,\left(k<n \Implies P(k)\right)$ (I.H)\\
 \null\quad Let $b\in T$ be artbitrary \\
 \null\qquad Assume $|b| = 2n$ \\
-\null\qquad Since the base case for $R$ is $\lambda$, the strings $pq,qp\in R$ by constructor cases $pxqy$ and $qxpy$ \\
-\null\qquad when $x,y = \lambda$\\
-\null\qquad By the constructor case $\forall x,y\in R.Q(xy)$\\
-\null\qquad Since $n-1<n$, by the I.H. $\forall x\in T.\left[|x|=2(n-1)\Implies Q(b)\right]$. \\
+\null\qquad Let $b'$ be $b$ with an arbitrary $p$ and $q$ removed.\\
+\null\qquad By the I.H: $(\forall x\in T.\left[|x|=2(n-1)\Implies Q(b)\right])$. Therefore $Q(b')$ \\
+\null\qquad If the two removed characters are the first two\\
+\null\qquad The constructor $pxqy$ allows for $pq$ to be concatinated to the start of $b'$ ($x=\lambda, y=b'$).\\
+\null\qquad If the two removed characters are the first and last\\
+\null\qquad The constructor $pxqy$ also allows for $b'$ to have $p$ concatnated at the start and $q$ \\
+\null\qquad concatinated at the end ($x=b, y=\lambda$)\\
+\null\qquad Since by the I.H every string in $T$ with a smaller cardinality than $b$ is in $R$, the\\
+\null\qquad constructor $pxqy$ also allows for a $q$ to be placed in an arbitrary position by altering the \\
+\null\qquad length of the strings $x$ and $y$\\
+\null\qquad The same is possible with $p$ and $q$ in reverse order with use of the $qxpy$ constructor\\
+\null\qquad With this combination it is possible to create any possible string $b\in T$\\
+\null\quad Since $|b|=2n$ was assumed $|b|=2n\Implies Q(b)$
+
 
 
 By strong induction: $\forall n\in \nats. P(n)$\\
@@ -174,6 +194,20 @@ Prove that $U \neq R$.
 
 \begin{solution}
 {\bf Solution:}\\
+{\bf Proof by contradiction }\\
+\null\quad Assume on the contrary that $U=R$\\
+\null\quad By $R$'s constructor $qxpy$, choose $x,y=\lambda$: $qp\in R$\\
+\null\quad By $R$'s constructor $pxqy$, choose $x,y=\lambda$: $pqs\in R$\\
+\null\quad By $R$'s constructor $qxpy$, choose $x=qp$, $y=\lambda$: $qqpp\in R$ \\
+\null\quad By $R$'s constructor $pxqy$, choose $x=pq$, $y=qqpp$: $ppqqqqpp\in R$ \\\\
+\null\quad $U$'s constructors $pqx,qpx,xpq,xqp$ only allow for $pq$ or $qp$ to be added to the front or\\
+\null\quad end of the string. This doesn't allow for a string that starts and ends in $pp$ \\
+\null\quad $U$'s constructors $qxp$ and $pxq$ only allow for the start/end of the string to be differing \\
+\null\quad characters. This does not allow for a string that starts and ends with $pp$\\\\
+\null\quad Therefore there are no constructors for $S$ that are able to create the string $ppqqqqpp$ \\\\
+\null\quad $ppqqqqpp$ being in $R$ but not in $U$, is a contradiction to the hypothesis $U=R$ \\\\
+Therefore by contradiction $U\not = R$
+
 
 \end{solution}
 \end{enumerate}
