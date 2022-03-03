@@ -81,6 +81,8 @@ $F(2)$\\\\
 \null\quad Therefore $F(h)\Implies F(2\pm\sqrt h)$\\
 Since $h$ is arbitrary, by structural induction $\forall h\in H.F(h)$\\
 Since every either constructor gives an irrational number no matter the input, there is only one way to obtain $2$. (The base case)\\\\
+{\bf Lemma \# 2:} - Proving that $\forall.h\in H.(0\le h\le 4)$\\
+
 {\bf Definitions:}\\
 $P(x): H\rightarrow \{T,F\} = $ The element $x$ can only be obtained from the rules in one way\\
 $x\preccurlyeq y: H\times H \rightarrow \{T,F\} =$ The number of times that a constructor was applied to make $x$ is less or equal to the amount for $y$ \\
@@ -118,8 +120,6 @@ $\preccurlyeq$ is a well ordering for $H$ with $2$ as the smallest element. Sinc
 \null\quad Therefore there is no way to create the smallest element in $C$\\
 By the well ordering principle: $C=\emptyset$\\
 $\forall h\in H.P(h)$
-
-
 \end{solution}
 
 \item
@@ -134,7 +134,19 @@ Prove that the set of all strict binary trees is countable.
 
 \begin{solution}
 {\bf Solution:}\\
-
+{\bf Definitions:}\\
+Define a coordinate system $(x,y): \nats\times\nats$ such that $(0,0)$ is the root of the tree.\\
+Each level of the tree can possibly have $2^y$ $\bullet$ and will have $2^y$ corresponding $x$ coordinates (starting at 0). Each $x$ coordinate represents a possible place for a $\bullet$ from left to right.\\
+The row below the root will have a $y$ coordinate of $1$ and this pattern will continue throughout the depth of the tree.\\\\
+$h(a): S\rightarrow \nats$= The height of the binary tree $a$ \\
+$b(a, (x, y)): S\times (\nats\times\nats)\rightarrow \{0,1\} =$ If there is a $\bullet$ at the position $(x,y)$ in the tree $a$ function returns $1$ and returns $0$ if not \\
+$P_i: \nats\rightarrow\nats = $ The $i$th prime number let $P(0)$ be $2$ and $P(1)$ be $3$ and so forth
+The function $F(a)$ is a surjective function from $S\rightarrow \nats$\\
+$$F(a): S\rightarrow \nats= \sum_{i=0}^d\left[P_i\sum_{j=0}^{2^i}\left[2^j\cdot b(a,(j,i))\right]\right]$$\\
+Using the function $b$ defined above, the inner sum will result in a natural number that when converted to base 2 will have a length of $2^i$. Each digit in this binary string represents a possible location for a bullet (1 if there is one there and 0 if there isn't). Since each place in the binary string has a unique value, there will be a unique corresponding natural number for every possible row of that length.  \\
+For every row in the binary tree, the unique numerical value of that row is multiplied by a unique prime number then added together. By the Fundamental theorem of arithmatic, a unique product of primes will result in a unique number. Therefore each number will be unique.\\
+Therefore since for each strict binary tree, there is a corresponding natural number. Given an arbitrary natural number that represents a strict binary tree, by factoring the number and converting the occurances of each factor into binary, the underlying binary tree can be determined.
+Therefore there is a surjective function from $\nats \rightarrow S$ and by extension $S$ is countable.
 \end{solution}
 \end{enumerate}
 \end{document}
