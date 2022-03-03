@@ -81,8 +81,14 @@ $F(2)$\\\\
 \null\quad Therefore $F(h)\Implies F(2\pm\sqrt h)$\\
 Since $h$ is arbitrary, by structural induction $\forall h\in H.F(h)$\\
 Since every either constructor gives an irrational number no matter the input, there is only one way to obtain $2$. (The base case)\\\\
-{\bf Lemma \# 2:} - Proving that $\forall.h\in H.(0\le h\le 4)$\\
-
+{\bf Lemma \#2:} - Proving that $\forall h\in H.(h\le 4)$\\
+Assume on the contrary that $4\in H$.\\
+Since $4>2$, $\exists x\in H.(2+\sqrt x = 4)$\\
+$2+\sqrt x = 4$  $\sqrt x = 2$  $x = 4$\\
+Therefore the only way to create $4$ with the constructors is with itself.\\
+This is a contradiction therefore it is not possible to create the value $4$ and every value must be less than $4$\\
+{\bf Lemma \#3:} - Proving that $\forall h\in H.(h\ge 0)$\\
+To get a value less than $2$, the $2-\sqrt h$ constructor must be used. As shown in Lemma \#2, every value in $h$ is less than $4$. Therefore every value in $H$ must be greater than $2-\sqrt 4 = 0$.\\\\
 {\bf Definitions:}\\
 $P(x): H\rightarrow \{T,F\} = $ The element $x$ can only be obtained from the rules in one way\\
 $x\preccurlyeq y: H\times H \rightarrow \{T,F\} =$ The number of times that a constructor was applied to make $x$ is less or equal to the amount for $y$ \\
@@ -102,14 +108,14 @@ $\preccurlyeq$ is a well ordering for $H$ with $2$ as the smallest element. Sinc
 \null\qquad Case 1: $\exists a,b\in H.(2+\sqrt a = 2+\sqrt b = x)$\\
 \null\qquad $2+\sqrt a = 2+\sqrt b$\\
 \null\qquad $\sqrt a = \sqrt b$\\
-\null\qquad Since all values in $H$ are greater than $0$ as shown in lemma 2:\\
+\null\qquad Since all values in $H$ are greater than $0$ as shown in lemma \#3:\\
 \null\qquad $a = b$\\
 \null\qquad $a\preccurlyeq x$ and $b\preccurlyeq x$ by the definition of $\preccurlyeq$, therefore $P(a)$ and $P(b)$\\
 \null\qquad $a$ and $b$ are the same element obtained in the same way.\\
 \null\qquad $ 2+\sqrt a$ and $2+\sqrt b$ are the same constructor\\
 \null\qquad Case 2: $\exists a,b\in H.(2-\sqrt a = 2-\sqrt b = x)$ $a$ and $b$ obtained from the rules differently\\
 \null\qquad $-\sqrt a = -\sqrt b$\\
-\null\qquad Since all values in $H$ are greater than $0$ as shown in lemma 2:\\
+\null\qquad Since all values in $H$ are greater than $0$ as shown in lemma \#2:\\
 \null\qquad $a = b$\\
 \null\qquad $a\preccurlyeq x$ and $b\preccurlyeq x$ by the definition of $\preccurlyeq$, therefore $P(a)$ and $P(b)$\\
 \null\qquad This is a contradiction since $a$ and $b$ must be obtained differently\\
@@ -140,12 +146,12 @@ Each level of the tree can possibly have $2^y$ $\bullet$ and will have $2^y$ cor
 The row below the root will have a $y$ coordinate of $1$ and this pattern will continue throughout the depth of the tree.\\\\
 $h(a): S\rightarrow \nats$= The height of the binary tree $a$ \\
 $b(a, (x, y)): S\times (\nats\times\nats)\rightarrow \{0,1\} =$ If there is a $\bullet$ at the position $(x,y)$ in the tree $a$ function returns $1$ and returns $0$ if not \\
-$P_i: \nats\rightarrow\nats = $ The $i$th prime number let $P(0)$ be $2$ and $P(1)$ be $3$ and so forth
+$P_i: \nats\rightarrow\nats = $ The $(i-1)$th prime number (ie $P(0) = 2, P(1) = 3$ ...)\\
 The function $F(a)$ is a surjective function from $S\rightarrow \nats$\\
-$$F(a): S\rightarrow \nats= \sum_{i=0}^d\left[P_i\sum_{j=0}^{2^i}\left[2^j\cdot b(a,(j,i))\right]\right]$$\\
-Using the function $b$ defined above, the inner sum will result in a natural number that when converted to base 2 will have a length of $2^i$. Each digit in this binary string represents a possible location for a bullet (1 if there is one there and 0 if there isn't). Since each place in the binary string has a unique value, there will be a unique corresponding natural number for every possible row of that length.  \\
-For every row in the binary tree, the unique numerical value of that row is multiplied by a unique prime number then added together. By the Fundamental theorem of arithmatic, a unique product of primes will result in a unique number. Therefore each number will be unique.\\
-Therefore since for each strict binary tree, there is a corresponding natural number. Given an arbitrary natural number that represents a strict binary tree, by factoring the number and converting the occurances of each factor into binary, the underlying binary tree can be determined.
+$$F(a): S\rightarrow \nats= \sum_{i=0}^{h(a)}\left[P_i\sum_{j=0}^{2^i}\left[2^j\cdot b(a,(j,i))\right]\right]$$\\
+Using the function $b$ defined above, the inner sum will result in a natural number that when converted to base 2 will have a length of $2^i$ (the max possible width at that $y$ coordinate). Each digit in this binary string represents a possible location for a $\bullet$ (1 if there is one there and 0 if there isn't). Since each place in the binary string has a unique value, there will be a unique corresponding natural number for every possible row with that width.  \\\\
+For every row in the binary tree, the unique numerical value of that row is multiplied by a unique prime number then added to all other rows in the outer sum. By the Fundamental theorem of arithmatic, a unique product of primes will result in a unique number. Each binary tree input will output a unique natural number. \\\\
+Given an arbitrary natural number in the format described above, finding the number of occurances of each factor and converting them into binary will give the positions of all $\bullet$s in each row. This information can be used to construct the binary tree.
 Therefore there is a surjective function from $\nats \rightarrow S$ and by extension $S$ is countable.
 \end{solution}
 \end{enumerate}
