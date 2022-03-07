@@ -1,0 +1,73 @@
+\documentclass[11pt]{article}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{fullpage}
+\usepackage{comment}
+\includecomment{solution}
+\includecomment{question}
+\setlength{\parskip}{1ex}
+\setlength{\parindent}{0in}
+
+\newcommand{\Implies}{\mbox{ IMPLIES }}
+\newcommand{\Or}{\mbox{ OR }}
+\renewcommand{\And}{\mbox{ AND }}
+\newcommand{\Not}{\mbox{NOT }}
+\newcommand{\Iff}{\mbox{ IFF }}
+\newcommand{\True}{\mbox{T}}
+\newcommand{\False}{\mbox{F}}
+\def\nats{{\mathbb N}}
+\def\ints{{\mathbb Z}}
+\def\reals{{\mathbb R}}
+\def\setG{{\mathscr{G}}}
+
+\begin{document}
+\begin{center}
+{\bf \Large \bf CSC240 Winter 2022 Midterm Examination Question 5}\\
+\end{center}
+\begin{solution}
+    Sebastien Psarianos 1008596119
+\end{solution}
+
+\begin{question}
+Your solution must be at most 1 typeset page, using at least 11 point font with 1 inch margins.
+\end{question}
+
+
+\begin{enumerate}
+\setcounter{enumi}{4}
+\item
+\begin{question}
+(8 marks)
+Let  $\setG = \{ g:\nats \rightarrow \nats \ |\ \forall n \in \nats.(g(n+1) > 2{g(n)})\}$.\\
+Use a diagonalization argument to prove that $\setG$ is uncountable.
+\end{question}
+
+\begin{solution}
+    Assume on the contrary that $\setG$ is countable.\\
+    There must exist a surjective function $h: \nats\rightarrow \setG$\\\\
+    Therefore $g\in \setG$ can be defined as $g_i$ for some natural number $i$.\\
+    The following matrix $M$ is defined such that $M[i,j]$ is the output of the function $g_j\in\setG$ with input $i$ (ie $g_3(2) = 15$) \\
+    $$
+        \left[
+            \begin{matrix}
+                0 & 1 & 3 & 7 & 15 & 31 & ...\\
+                0 & 2 & 5 & 11 & 23 & 47 & ... \\
+                0 & 3 & 7 & 15 & 31 & 63 & ...\\
+                0 & 4 & 9 & 19 & 39 & 79 & ...\\
+                0 & 5 & 11 & 23 & 47 & 95 & ...\\
+                0 & 6 & 13 & 27 & 55 & 111 & ...\\
+                ... & ... & ... & ...& ...& ... & ...
+            \end{matrix}
+        \right]
+    $$
+    Define $g_d: \nats\rightarrow \nats$ as $ \forall n\in\nats. (g(n) = M[n,n])$ (the diagonal of the matrix)\\
+    Let $g_c$ be the function such that
+    $$g_c(x) =\begin{cases}
+        g_d(x) + 1 & 2g_d(x-1) +1  = g_d(x)\\
+        2g_d(x-1) + 1 & 2g_d(x-1) + 1 \ne g_d(x)  \\
+    \end{cases}$$  \\
+    Since the value is always at least $1 + 2\times$ the previous value, this is a valid function in $\setG$. Therefore this set must be in the matrix. However this function has at least one different input/output combo from every other function in the matrix. This is a contradiction, therefore $\setG$ is not countable.
+\end{solution}
+\end{enumerate}
+\end{document}

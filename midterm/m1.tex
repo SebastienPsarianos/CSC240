@@ -1,0 +1,110 @@
+\documentclass[11pt]{article}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{fullpage}
+\usepackage{comment}
+\includecomment{solution}
+\excludecomment{question}
+\setlength{\parskip}{1ex}
+\setlength{\parindent}{0in}
+
+\newcommand{\Implies}{\mbox{ IMPLIES }}
+\newcommand{\Or}{\mbox{ OR }}
+\newcommand{\And}{\mbox{ AND }}
+\newcommand{\Not}{\mbox{NOT }}
+\newcommand{\Iff}{\mbox{ IFF }}
+\newcommand{\True}{\mbox{T}}
+\newcommand{\False}{\mbox{F}}
+\def\nats{{\mathbb N}}
+\def\ints{{\mathbb Z}}
+\def\reals{{\mathbb R}}
+
+\begin{document}
+\begin{center}
+{\bf \Large \bf CSC240 Winter 2022 Midterm Examination Question 1}\\
+\begin{solution}
+Sebastien Psarianos 1008596119
+\end{solution}
+\end{center}
+
+\begin{question}
+Your solution must be at most 1 typeset page, using at least 11 point font with 1 inch margins.
+\end{question}
+
+
+\begin{enumerate}
+\item
+\begin{question}
+(15 marks)
+Recall that $\mathscr{P}(\ints)$ denotes all sets of integers.\\
+Let $\mathscr{F} = \{ {\cal F} \subseteq \mathscr{P}(\ints)\ |\ {\cal F}$ is finite\} denote all finite families of sets of integers.\\
+Note that, for some ${\cal F} \in \mathscr{F}$, some of the sets in ${\cal F}$ may be infinite.
+
+Recall that ${\cal F}$ is a  {\em cover} of $S \in \mathscr{P}(\ints)$
+if  each element of $S$ belongs to at least one set in ${\cal F}$.\\
+${\cal F}$ is a {\em minimal cover} of $S$ if
+${\cal F}$ is a cover of $S$,
+but  no proper subset of ${\cal F}$ is a cover of  $S$.
+
+${\cal F}$ is a {\em minimum cover} of $S$ from ${\cal G} \in \mathscr{F}$
+if ${\cal F} \subseteq {\cal G}$, ${\cal F}$ is a cover of $S$,  and no family of  sets ${\cal F'} \subseteq {\cal G}$
+that contains fewer sets than ${\cal F}$ is a cover of $S$.
+\end{question}
+
+\begin{enumerate}
+\item
+\begin{question}
+Give a  finite family of sets ${\cal G}  \in \mathscr{F}$, a family of sets ${\cal F} \subseteq {\cal G}$, and a set $S \in \mathscr{P}(\ints)$ such that ${\cal F}$ is a {\em minimal cover} of $S$ but
+${\cal F}$ is not a {\em minimum cover} of $S$ from ${\cal G}$. \\
+Briefly justify your answer.
+\end{question}
+
+\begin{solution}
+Let $S = \{1,2,3\}$\\
+Let ${\cal G} =  \{\{1\},\{2,3\}, \{1,2,3\}\}$\\
+Let ${\cal F} = \{\{1\}, \{2,3\}\}$\\\\
+In this senario, ${\cal F}$ is a minimal cover for the set $S$ as no proper subset of ${\cal F}$ is a cover for $S$. (The only proper subsets are $\{\{1\}\}$ and $\{\{2,3\}\}$)\\\\
+${\cal F}$ is not a minimum set however since there exists a subset of ${\cal G}$ (namely $\{\{1,2,3\}\}$) that is a cover for $S$ and since ${\cal F}$ contains $2$ elements and $\{\{1,2,3\}\}$ contains $1$ \\
+\end{solution}
+
+\item
+\begin{question}
+Express ``${\cal F}$ is a {\em minimal cover} of $S$'' as a predicate using only quantifiers, logical connectives,
+and the predicates $=$, Contains, and Cover,
+where, for any set $S \in \mathscr{P}(\ints)$ and any finite family of sets of integers ${\cal F} \in \mathscr{F}$,\\
+${\rm Contains}({\cal F},S $) = ``${\cal F}$ contains $S$'' and\\
+${\rm Cover}({\cal F},S $) = ``${\cal F}$ is a cover for $S$''.\\
+Briefly justify your answer.
+\end{question}
+
+\begin{solution}
+$${\rm MinimalCover}({\cal F},S): \mathscr{F}\times \mathscr{P}(\ints)\rightarrow \{T,F\} ={\rm Cover}({\cal F},S) \And $$
+$$[\forall{\cal F'}\in\mathscr{F}. \left(\forall  A\in {\cal F'}.{\rm Contains}({\cal F}, A) \And \Not({\cal F'} = {\cal F})\right)$$
+$$\Implies \Not({\rm Cover}({\cal F'}, S) ]$$\\
+There are $2$ conditions that must be satisfied for ${\cal F}$ to be a minimal cover of $S$ represented on both sides of the main conjunction:\\
+1. ${\cal F}$ must be a cover of $S$. This is the left side of the main conjunction ${\rm Cover}({\cal F}, S)$. \\
+2. Every proper subset (${\cal F'}$) of ${\cal F}$ ${\cal F'}$ is not a cover (the right side.)The hypothesis of the implication checks if ${\cal F'}\in \mathscr{F}$ is a proper subset of ${\cal F}$. If it is then it must not be a cover of $S$. If it isn't then the statement is vaccuously true.\\\\
+\end{solution}
+
+\item
+\begin{question}
+Express ``${\cal F}$ is a {\em minimum cover} of $S$ from ${\cal G}$'' as a predicate using
+only quantifiers, logical connectives, and the predicates $=$, Contains, and Cover.\\
+You may also use the set
+${\cal R}^{\cal D}$
+of all functions from ${\cal D}$ to ${\cal R}$,
+where ${\cal D}, {\cal R} \in \mathscr{F}$ are finite families of sets of integers.\\
+Briefly justify your answer.
+\end{question}
+
+\begin{solution}
+$${\rm MinimumCover}({\cal F}, S, {\cal G})=$$
+$$ \forall A\in{\cal F}.{\rm Contains}({\cal G}, A)\And {\rm Cover}({\cal F}, S) \And $$
+$$[\forall{\cal F'}\in\mathscr{F}. (\forall B\in {\cal F'}.{\rm Contains}({\cal G}, B)\And |{\cal F'}| < |{\cal F}|) \Implies \Not {\rm Cover}({\cal F'}, S)]$$\\
+The first condition $\forall A\in{\cal F}.{\rm Contains}({\cal G}, A)$ checks if ${\cal F}$ is a subset of ${\cal G}$.\\
+The second condition ${\rm Cover}({\cal F}, S)$ ensures that ${\cal F}$ is a cover for $S$.\\
+The third condition checks if any ${\cal F'}\subseteq {\cal G}$ with less elements than ${\cal F}$ is a cover for $S$
+\end{solution}
+\end{enumerate}
+\end{enumerate}
+\end{document}

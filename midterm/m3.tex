@@ -1,0 +1,86 @@
+\documentclass[11pt]{article}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{fullpage}
+\usepackage{comment}
+\includecomment{solution}
+\excludecomment{question}
+\setlength{\parskip}{1ex}
+\setlength{\parindent}{0in}
+
+\newcommand{\Implies}{\mbox{ IMPLIES }}
+\newcommand{\Or}{\mbox{ OR }}
+\newcommand{\And}{\mbox{ AND }}
+\newcommand{\Not}{\mbox{NOT }}
+\newcommand{\Iff}{\mbox{ IFF }}
+\newcommand{\True}{\mbox{T}}
+\newcommand{\False}{\mbox{F}}
+\def\nats{{\mathbb N}}
+\def\ints{{\mathbb Z}}
+\def\reals{{\mathbb R}}
+
+\begin{document}
+\begin{center}
+{\bf \Large \bf CSC240 Winter 2022 Midterm Examination Question 3}\\
+\begin{solution}
+Sebastien Psarianos 1008596119
+\end{solution}
+\end{center}
+
+\begin{question}
+Your solution must be at most 1 typeset page, using at least 11 point font with 1 inch margins.
+\end{question}
+
+
+\begin{enumerate}
+\setcounter{enumi}{2}
+\item
+\begin{question}
+(10 marks)
+Consider the following recursively defined set ${\cal I}$ of propositional formulas:\\
+Base Case: all propositional variables are in ${\cal I}$.\\
+Constructor Case: If $E \in {\cal I}$ and $X$ is a propositional variable that does not occur in $E$, then $(E \Implies X) \in {\cal I}$.
+
+Use structural induction to prove that no propositional formula in ${\cal I}$ is valid.\\\\
+\end{question}
+{\bf Definitions:}\\
+${\cal V} = $ The set of all propositional variables. \\
+$ {\rm Interp}(P, B): {\cal I} \times \{T,F\} \rightarrow \{T,F\} = $ There exists an interpretation in which the propositional formula $P$ has the value $B$.\\
+$Q(P): {\cal I} \rightarrow \{T,F\} = {\rm Interp}(P, T) \And {\rm Interp}(P, F)$\\\\
+{\bf Base Case:}\\
+\null\quad Let $P\in {\cal V}$ be an arbitrary single propositional variable.\\
+\null\quad $P\in {\cal I }$: (by the base case of ${\cal I}$) \\
+\null\quad The interpretation $P = F$ makes the propositional formula $F$ \\
+\null\quad ${\rm Interp}(P, F)$\\
+\null\quad The interpretation $P = T$ makes the propositional formula $T$ \\
+\null\quad ${\rm Interp}(P, T)$\\
+\null\quad ${\rm Interp}(P, T) \And {\rm Interp}(P, F)$ (proof of conjunction)\\
+\null\quad $Q(P)$\\
+Since $P\in {\cal V}$ is arbitrary: $\forall P\in {\cal V}.  Q(P)$\\\\
+{\bf Constructor Cases:}\\
+\null\quad Let $P\in {\cal I}$ be arbitrary.\\
+\null\qquad Assume $Q(P)$\\
+\null\qquad ${\rm Interp}(P, T) \And {\rm Interp}(P, F)$ (by definition of $Q(P)$)\\
+\null\qquad\quad Let $X\in{\cal V}$ be arbitrary.\\
+\null\qquad\quad By the constructor case of ${\cal I}$, $(P\Implies X)\in {\cal I}$\\
+\null\qquad\quad ${\rm Interp}(P, F)$ (use of conjunction)\\
+\null\qquad\quad Keeping all values in the interpretation that makes $P = T$ the same, and assigining a\\
+\null\qquad\quad value of $X= T$ gives a new interpretation that includes $X$.\\
+\null\qquad\quad This interpretation will be $T$ since $T\Implies T$ is $T$\\
+\null\qquad\quad ${\rm Interp}(P\Implies X, T)$\\
+\null\qquad\quad ${\rm Interp}(P, T)$ (use of conjunction)\\
+\null\qquad\quad Keeping all values in the interpretation that makes $P = T$ the same, and assigining a\\
+\null\qquad\quad value of $X= F$ gives a new interpretation that includes $X$.\\
+\null\qquad\quad This interpretation will be $F$ since $T\Implies F$ is $F$\\
+\null\qquad\quad ${\rm Interp}(P\Implies X, F)$\\
+\null\qquad\quad ${\rm Interp}(P\Implies X, T)\And {\rm Interp}(P\Implies X, F) $ (proof of conjunction)\\
+\null\qquad\quad $Q(P\Implies X)$\\
+\null\qquad $\forall X\in{\cal V}.Q(P\Implies X)$ (generalization)\\
+\null\quad $Q(P)\Implies \forall X\in{\cal V}.Q(P\Implies X)$ (proof of implication)\\
+$\forall P\in {\cal I}.\left[Q(P)\Implies \forall X\in{\cal V}.Q(P\Implies X)\right]$ (generalization)\\
+$\forall P\in {\cal I}.Q(P)$ (structural induction)\\\\
+Since every propositional formula in ${\cal I}$ can be both $T$ and $F$ with different interpretations, no formula in ${\cal I}$ is valid.
+\begin{solution}
+\end{solution}
+\end{enumerate}
+\end{document}

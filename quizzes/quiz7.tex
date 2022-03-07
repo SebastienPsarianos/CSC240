@@ -1,0 +1,69 @@
+\documentclass[11pt]{article}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\setlength{\parskip}{1ex}
+\setlength{\parindent}{0in}
+\def\nats {{\mathbb N}}
+\def\ints {{\mathbb Z}}
+
+\usepackage{comment}
+\includecomment{solution}
+\excludecomment{question}
+\newcommand{\Implies}{\mbox{ IMPLIES }}
+\newcommand{\Or}{\mbox{ OR }}
+\newcommand{\And}{\mbox{ AND }}
+\newcommand{\Not}{\mbox{ NOT }}
+\newcommand{\Iff}{\mbox{ IFF }}
+\newcommand{\True}{\mbox{T}}
+\newcommand{\False}{\mbox{F}}
+
+\begin{document}
+
+{\bf \large Quiz 7}
+
+\medskip
+
+\begin{question}
+Solve the recurrence
+$$A(n) = \left \{
+\begin{array}{ll}
+1 & \mbox{if } n = 1\\
+n^2A(n-1)  & \mbox{if } n \geq 2
+\end{array} \right .$$
+using any technique except looking up the answer.
+\end{question}
+
+\begin{solution}
+{\bf Solution}:\\
+Solving by plug and chug:\\
+$$A(n)= 2^n \cdot A(n-1)=)=$$
+$$=2^n \cdot 2^{n-1} \cdot A(n-2) =$$
+$$=2^n \cdot 2^{n-1} \cdot 2^{n-2} \cdot A(n-3)= $$
+$$=2^n \cdot 2^{n-1} \cdot 2^{n-2} \cdot 2^{n-3} \cdot A(n-4)= $$
+$$= 2^{4n-6} A(n-4)$$
+Assume that $n-4 =1$ therefore $n=5$ and $A(n-4) = 1$\\
+$$ A(5)= 2^{(5-1)5-6}$$
+With this repeated substitution, it seems as if the final sum is $2^{n(n-1) - x}$ where $x$ is the sum of every positive integer 1 less than $n$\\
+Since the sum of all integers less than an arbitrary number $y$ is $\frac{y(y-1)}2$, and since in this case $y=n-1$\\
+$$x = \frac{(n-1)(n-1-1)}2 =  \frac{(n-1)(n-2)}2$$\\
+Theroretically the final sum can be represented as \\
+$$ A(n) = 2^{n(n-1) - (n-1)(n-2)/2}$$\\
+{\bf Proof by induction:}\\
+{\bf Definitions:}\\
+$P(n) \nats\rightarrow \{T,F\} ::= A(a) = 2^{n(n-1) - (n-1)(n-2)/2} $\\
+Claim $\forall a\in A. P(a)$\\
+{\bf Base case: }\\
+$A(1) =1 $ by the definition of the function $A$\\
+$2^{1(1-1) - (1-1)(1-2)/2 = 2^0 = 1}$\\
+Therefore $A(a)$ holds for the base case\\
+{\bf Induction Step:}\\
+\null\quad Let $a\in A$ be arbitrary.\\
+\null\qquad Assume $P(a)$ (I.H)\\
+\null\qquad Therefore $A(a-1) = 2^{(a-1)((a-1)-1) - ((a-1)-1)((a-1)-2)/2} = 2^{(a-1)(a-2) - (a-2)(a-3)/2}$\\
+\null\qquad By the definition of $A$: $A(a) = 2^n + A(a-1)$\\
+\null\qquad $=2^a \cdot 2^{(a-1)(a-2) - (a-2)(a-3)/2}  =2^{a(a-1) - (a-1)(a-2)/2}  $\\
+\null\quad Therefore $P(a-1) \Implies P(a)$\\
+Therefore by induction $\forall a\in \nats.P(a)$\\
+
+\end{solution}
+\end{document}

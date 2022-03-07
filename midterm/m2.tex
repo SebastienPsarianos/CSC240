@@ -1,0 +1,144 @@
+\documentclass[11pt]{article}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{fullpage}
+\usepackage{comment}
+\includecomment{solution}
+\excludecomment{question}
+\setlength{\parskip}{1ex}
+\setlength{\parindent}{0in}
+
+\newcommand{\Implies}{\mbox{ IMPLIES }}
+\newcommand{\Or}{\mbox{ OR }}
+\newcommand{\And}{\mbox{ AND }}
+\newcommand{\Not}{\mbox{NOT }}
+\newcommand{\Iff}{\mbox{ IFF }}
+\newcommand{\True}{\mbox{T}}
+\newcommand{\False}{\mbox{F}}
+\def\nats{{\mathbb N}}
+\def\ints{{\mathbb Z}}
+\def\reals{{\mathbb R}}
+
+% Environment for writing formal proofs======================================
+%
+% \nl ends line and makes next line a Numbered Line
+% \ul ends line and makes next line an Unnumbered Line
+% \n increases the level of indentation ("next")
+% \p decreases the level of indentation ("previous")
+%\firstline  to number the first line of a proof
+%
+% Example:
+%
+% 1     let $x \in \nats$ be arbitrary
+% 2         let $y = x+1 \in \nats$
+% 3         $y > x$; property of $\nats$, 2
+% 4      $\exists y \in \nats. (y > x)$; construction 2, 3
+% 5  $\forall x \in \nats. \exists y \in \nats. (y > x)$; generalization 1,4
+%
+
+% this can be typed as follows:
+%
+% \begin{formal}
+% \firstline          <--- to number the first line of a proof
+% \n \label{gen-start} let $x \in \nats$ be arbitrary \nl
+% \n let $y = x+1 \in \nats$ \label{defy} \nl
+% $y > x$; property of $\nats$, \lref{defy} \label{gt} \nl
+% \p $\exists y \in \nats. (y > x)$; \label{inside} construction \lref{defy},\lref{gt} \nl
+% \p $\forall x \in \nats. \exists y \in \nats. (y > x)$; generalization \lref{gen-start}, \lref{inside}
+% \end{formal}
+%
+% You can use \labels anywhere in the code and \lref to refer to the line
+% number.  (This is done using the smartref package.)
+%
+%to reset the line numbering counter:
+%\setcounter{linenum}{0}
+
+\usepackage{smartref} % for referencing the line numbers
+\newcounter{linenum}
+\addtoreflist{linenum}
+\def\codeTabSpace{\hspace*{4mm}}
+\newenvironment{formal}%
+{\begin{tabbing}%
+\codeTabSpace \= \hspace*{20mm} \= \hspace*{20mm} \= \hspace*{20mm} \= \kill%
+}%
+{\end{tabbing}%
+}
+\newcounter{ind}
+\newcommand{\n}{\addtocounter{ind}{5}\hspace*{5mm}}
+\newcommand{\p}{\addtocounter{ind}{-5}\hspace*{-5mm}}
+\newcommand{\nl}{\\\stepcounter{linenum}{\scriptsize \arabic{linenum}}\>\hspace*{\value{ind}mm}}
+\newcommand{\ul}{\\\>\hspace*{\value{ind}mm}}
+\newcommand{\bl}{\\[-1.5mm]\>\hspace*{\value{ind}mm}}
+\newcommand{\firstline}{\stepcounter{linenum}{\scriptsize \arabic{linenum}}\>}
+\newcommand{\lref}[1]{\linenumref{#1}} % use this to refer to a line number
+% End of stuff for entering formal=====================================
+
+\begin{document}
+\begin{center}
+{\bf \Large \bf CSC240 Winter 2022 Midterm Examination Question 2}\\
+\begin{solution}
+Sebastien Psarianos 1008596119
+\end{solution}
+\end{center}
+
+\begin{question}
+Your solution must be typeset and at most 40 lines long.
+\end{question}
+
+
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item
+\begin{question}
+(15 marks)
+Let ${\cal F}$ denote the set of all functions from $\nats$ to $\reals^+\cup \{0\}$.
+Recall that, for any function $f \in {\cal F}$,
+$$O(f) = \{ g \in {\cal F} \ | \ \exists c \in \reals^+.\exists b \in \nats. \forall n \in \nats. [(n \geq b) \Implies (g(n) \leq c \cdot f(n))] \}.$$
+
+Formally {\bf disprove} $\forall f \in  {\cal F}. \forall g \in {\cal F}.[(g \in O(f)) \Implies (2^g \in O(2^f))]$.
+
+Number every line of your proof. Do only one step on each line.
+Explicitly state when a proof technique is being applied and say which earlier lines it refers to.
+Use proper indentation.
+\end{question}
+
+\begin{solution}
+    \begin{formal}
+        \firstline
+        \n\label{f-def}Let $f(x): \nats\rightarrow \reals^+\cup \{0\} = x$ \nl
+        \n\label{g-def}Let $g(x): \nats\rightarrow \reals^+\cup \{0\} = 2x$ \nl
+        \n\label{c-def}Let $c = 4$\nl
+        \label{4-in}$4\in\reals^+$ \nl
+        \label{c-in}$c\in\reals^+$; \lref{c-def},\lref{4-in}\nl
+        \n \label{b-def}Let $b = 0$ \nl
+        \label{0-in}$0\in\nats $ \nl
+        \label{b-in}$b\in\nats$; \lref{b-def},\lref{0-in}\nl
+        \n\label{assum-ran}Assume $n\ge b$\nl
+        $n\ge 0$; \lref{b-def},\lref{assum-ran}\nl
+        \label{ineq-1}$2n \le 4n$; Axiom (larger coefficent of $n$ in linear equation)\nl
+        \label{ineq-2}$ g(n) \le b\cdot f(n) $; Substitution \lref{f-def}, \lref{g-def}, \lref{b-def} \lref{ineq-1}\nl
+        \p\label{implication-1} $n\ge0 \Implies g(n) \le b\cdot f(n)$; Direct Proof \lref{assum-ran},\lref{ineq-2}\nl
+        \p$\exists b\in \left[n\ge0 \Implies g(n) \le b\cdot f(n)\right]$; Construction \lref{b-def}, \lref{b-in}\nl
+        \p\label{implication-left}$\exists c\in\reals^+. \exists b\in\nats \left[n\ge0 \Implies g(n) \le b\cdot f(n)\right]$; Construction \lref{c-def}, \lref{c-in}\nl
+        \label{start}$g\in O(f)$; \lref{implication-left} Definition of $O$\nl
+        \label{2-f}$2^{f(x)} = 2^x$; \lref{f-def} Definition of $f$\nl
+        \label{2-g}$2^{g(x)} = 2^{2x}$; \lref{g-def} Definition of $g$\nl
+        \label{lim}$\lim_{x\rightarrow \infty}(2^{2x}) >\lim_{x\rightarrow \infty}(c\cdot 2^x)$ ; (Higher exponent at infinity)\nl
+        \n \label{c-def-2}Let $c\in\reals^+$ be arbitrary\nl
+        \n \label{b-def-2}Let $b\in \nats$ be arbitrary\nl
+        \n \label{n-def-2}Let $n\in \nats$ be the max of 0 and the point at which $c\cdot 2^b$ becomes smaller than $2^{2b}$\nl
+        \n\label{n-assumpt}Let $n\ge b$\nl
+        \label{n-exists}$2^{2n} >c \cdot  2^{n}$; \lref{lim}; \lref{n-def-2}, (Since $2^{2x}>c\cdot 2^x$ on $x\in(n,\infty)$.)\nl
+        \label{n-sub}$2^{g(n)} > c\cdot 2^{f(n)}$; \lref{2-f}, \lref{2-g}, \lref{n-exists} Substitution\nl
+        \label{n-sub-2}\p$n\ge b \And (2^{g(n)} > c\cdot 2^{f(n)})$; \lref{n-assumpt} \lref{n-sub} Proof of conjunction\nl
+        \label{n-sub-3}\p$\exists n\in\nats.[n\ge b \And (2^{g(n)} > c\cdot 2^{f(n)})]$ \lref{n-def-2}, \lref{n-sub-2} Construction \nl
+        \label{n-sub-4}\p$\forall b\in\nats.\exists n\in\nats.[n\ge b \And (2^{g(n)} > c\cdot 2^{f(n)})]$ \lref{b-def-2}, \lref{n-sub-3} Generalization \nl
+        \label{n-sub-5}\p$\forall c\in\reals^+.\forall b\in\nats.\exists n\in\nats.[n\ge b \And (2^{g(n)} > c\cdot 2^{f(n)})]$ \lref{c-def-2}, \lref{n-sub-4} Generalization\nl
+        \label{n-sub-6}\p$\forall c\in\reals^+.\forall b\in\nats.\exists n\in\nats.[n\ge b \And (2^{g(n)} > c\cdot 2^{f(n)})]\Iff$\ul
+        $\Not\left[ \exists c \in \reals^+.\exists b \in \nats. \forall n \in \nats. [(n \geq b) \Implies (g(n) \leq c \cdot f(n))] \right]$; Logical inference\nl
+        \label{final}$2^g\not\in O(2^f)$; \lref{n-sub-5} By Definition of $O$\nl
+        $\Not\left[\forall f \in  {\cal F}. \forall g \in {\cal F}.[(g \in O(f)) \Implies (2^g \in O(2^f))]\right]$; \lref{start}, \lref{final} By counterexample
+    \end{formal}
+\end{solution}
+\end{enumerate}
+\end{document}

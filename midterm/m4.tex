@@ -1,0 +1,115 @@
+\documentclass[11pt]{article}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{fullpage}
+\usepackage{comment}
+\includecomment{solution}
+\excludecomment{question}
+\setlength{\parskip}{1ex}
+\setlength{\parindent}{0in}
+
+\newcommand{\Implies}{\mbox{ IMPLIES }}
+\newcommand{\Or}{\mbox{ OR }}
+\newcommand{\And}{\mbox{ AND }}
+\newcommand{\Not}{\mbox{NOT }}
+\newcommand{\Iff}{\mbox{ IFF }}
+\newcommand{\True}{\mbox{T}}
+\newcommand{\False}{\mbox{F}}
+\def\nats{{\mathbb N}}
+\def\ints{{\mathbb Z}}
+\def\reals{{\mathbb R}}
+
+\begin{document}
+\begin{center}
+{\bf \Large \bf CSC240 Winter 2022 Midterm Examination Question 4}\\
+\begin{solution}
+Sebastien Psarianos 1008596119
+\end{solution}
+\end{center}
+
+\begin{question}
+Your solution must be at most 2 typeset pages, using at least 11 point font with 1 inch margins.
+\end{question}
+
+
+\begin{enumerate}
+\setcounter{enumi}{3}
+\item
+\begin{question}
+(15 marks)
+For any nonempty string of decimal digits $b \in \{0,1, \ldots, 9\}^+$,
+let $f(b)$ be the string of decimal digits obtained by
+inserting a 0 to the right of the leftmost digit in $b$ and then, if the resulting string represents a positive integer $n$,
+replace it by a string of the same length which represents $n-1$.
+For example, $f(11) = 100$, $f(100)  = 0999$, and $f(0999) = 00998$.
+
+Prove, using double induction, that for all $b \in \{0,1,\ldots, 9\}^+$,  there exists $i \in \nats$ such that $f^{(i)}(b) \in \{0\}^+$ is a nonempty string containing only 0's.\\
+In other words, if you repeatedly apply the function $f$, eventually you will get a nonempty string containing only 0's.
+Note that $f^{(0)}(b) = b$ for all nonempty strings $b \in \{0,1,\ldots, 9\}^+$.
+\end{question}
+
+\begin{solution}
+    {\bf Proof by induction}:\\\\
+    {\bf Definitons:}\\
+    $b_1: \{0,1,..,9\}^+ \rightarrow \{0,1,..,9\}$ the first digit in $b$.\\
+    $b_{-1}: \{0,1,..,9\}+ \rightarrow \{0,1,..,9\}^+$ The string $b$ with $b_1$ removed (empty string if the length of $b$ is $1$).\\
+    Given an arbitrary digit $d$ let $d^n$ be the digit $d$ repeated $n$ times.\\
+    ${\rm VAL}(b): \{0,1,...,9\}^+ \rightarrow \nats\} = $ "The value of $b_{-1}$"\\
+    $P(n, m): \nats\times\nats\rightarrow\{T,F\}  =\forall b\in\{0,1,...,9\}^+.( b_1 \le n\And {\rm VAL}(b) = m)\Implies$\\
+    $(\exists i\in\nats.f^{(i)}(b)\in\{0\}^+)$\\\\
+    {\bf Base Case:}\\
+    \null\quad Let $b\in \{0,1,...,9\}^+$ be arbitrary.\\
+    \null\qquad Assume that $b_1= 0\And {\rm VAL}(b)=0$\\
+    \null\qquad Therefore $\exists x\in\nats.b=(0^x)$ \\
+    \null\qquad Choose $i=0$. $f^{(0)}(0^x) = 0^x$\\
+    \null\qquad $f^{(i)}(0^x)\in\{0\}^+$\\
+    \null\qquad $\exists i\in\nats.f^{(i)}(b) \in \{0\}^+$\\
+    \null\quad $b_1= 0\And {\rm VAL}(b)=0 \Implies\exists i\in\nats.f^{(i)}(b) \in \{0\}^+$ (proof of implication)\\
+    $\forall b\in \{0,1,...,9\}^+.b_1= 0\And {\rm VAL}(b)=0 \Implies\exists i\in\nats.f^{(i)}(b) \in \{0\}^+$ (generalization)\\
+    $P(0,0)$\\\\
+    \null\quad Let $m\in\nats$ and be arbitrary\\
+    \null\qquad Assume $P(0,m)$ (Induction Hypothesis)\\
+    \null\qquad\quad Let $b\in\{0,1,...,9\}^+$ be arbitrary.\\
+    \null\qquad\qquad Assume $b_1 = 0 \And {\rm VAL}(b) = m +1$\\
+    \null\qquad\qquad When $f$ is applied to $b$, adding in the $0$ will not change the value since $b_1=0$.\\
+    \null\qquad\qquad The value will decrease by $1$ every time $f$ is applied.\\
+    \null\qquad\qquad By the I.H given a string $b'$ with value $m$ and starting with $0$ $\exists i'\in\nats.f^{(i)}(b')\in\{0\}^+$\\
+    \null\qquad\qquad Since $f$ decreases the value by $1$ and since $b'$ has a value of 1 less than $b$ choosing\\
+    \null\qquad\qquad $i = i'+ 1$ will reduce the value of $b$ to $0$.\\
+    \null\qquad\qquad Therefore $\exists i\in\nats.f(b)^{(i)}\in\{0\}^+$\\
+    \null\qquad\quad $b_1 = 0 \And {\rm VAL}(b) = m +1\Implies \exists i\in\nats.f(b)^{(i)}\in\{0\}^+$ (proof of implication)\\
+    \null\qquad $\forall b\in\{0,1,...,9\}^+.\left[b_1 = 0 \And {\rm VAL}(b) = m +1\Implies \exists i\in\nats.f(b)^{(i)}\in\{0\}^+\right]$ \\
+    \null\qquad (generalization)\\
+    \null\quad $P(0,m)\Implies P(0,m+1)$\\
+    $\forall m\in\nats. P(0,m)$ (by induction)\\\\
+    {\bf Induction Step:}\\
+    \null\quad Let $n\in\nats$ be arbitrary.\\
+    \null\qquad Assume $\forall m\in\nats.P(n, m)$ (Induction Hypothesis):\\
+    \null\qquad\quad Let $b\in \{0,1,...,9\}^+$ be arbitrary.\\
+    \null\qquad\qquad Assume $b_1 = m+1 \And {\rm VAL}(b) = n$\\
+    \null\qquad\qquad There are two cases:\\
+    \null\qquad\qquad $0\le m \le 8$ in this case $1\le b_1\le 9 $\\
+    \null\qquad\qquad $m\ge 9$: In this case $b_1$ becomes the first digit in $m+1$. $1\le b_1\le 9 $\\
+    \null\qquad\qquad $1\le b_1\le 9$.\\
+    \null\qquad\qquad When the function is applied to $b$, the output's value will have increased by a \\
+    \null\qquad\qquad multiple of $10$. However a $1$ will be subtracted every time.\\
+    \null\qquad\qquad This leads to a string of the form $b_1\cdot 0^x$ when every number less than $b_1$ is removed.\\
+    \null\qquad\qquad Applying the function again gives a string of the form $b_1-1\cdot 9^{x+1}$ Let this be $b'$\\
+    \null\qquad\qquad By the I.H, $\forall m\in\nats.\forall b\in\{0,1,...,9\}^+.[b_1 = n \And {\rm VAL}(b) = m\Implies$\\
+    \null\qquad\qquad $\exists i\in\nats.f(b)^{(i)}\in\{0\}^+]$\\
+    \null\qquad\qquad Since the string starts with $b_1-1$ there is $i'\in\nats$ such that $f^{(i)}(b') \in\{0\}^+$\\
+    \null\qquad\qquad Let $i''$ be the amount of times that $f$ was applied to $b$ to get $b'$.\\
+    \null\qquad\qquad Choose $i = i' + i''$\\
+    \null\qquad\qquad Applying $f$ $i$ times to $b$ will give a string of only $0$s. \\
+    \null\qquad\qquad Therefore $\exists i\in\nats.f^{(i)}(b)\in\{0\}^+$\\
+    \null\qquad\quad $(b_1 = m+1 \And {\rm VAL}(b) = n)\Implies \exists i\in\nats.f^{(i)}(b)\in\{0\}^+$ (proof of implication)\\
+    \null\qquad $\forall b\in\{0,1,...,9\}^+.(b_1 = m+1 \And {\rm VAL}(b) = n)\Implies \exists i\in\nats.f^{(i)}(b)\in\{0\}^+$ \\
+    \null\qquad (generalization)\\
+    \null\qquad $P(n+1,m)$\\
+    \null\quad $(\forall m\in\nats.P(n, m)) \Implies P(n+1,m)$ (generalization)\\
+    $\forall n\in\nats.\forall m\in\nats.P(n,m)$ (double induction).\\
+
+    Therefore there is a number of times $i$ for every $b\in\{0,1,...,9\}^+$ such that $f^{(i)}(b)\in\{0\}^+$\\
+\end{solution}
+\end{enumerate}
+\end{document}
