@@ -1,0 +1,246 @@
+\documentclass[11pt]{article}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage{mathrsfs}
+\usepackage{comment}
+\excludecomment{ignore}
+\includecomment{solution}
+\excludecomment{question}
+\setlength{\parindent}{0ex}
+\setlength{\parskip}{1ex}
+\def\nats {{\mathbb N}}
+\def\ints {{\mathbb Z}}
+\def\reals {{\mathbb R}}
+\newcommand{\Implies}{\mbox{ IMPLIES }}
+\newcommand{\Or}{\mbox{ OR }}
+\newcommand{\And}{\mbox{ AND }}
+\newcommand{\Not}{\mbox{NOT }}
+\newcommand{\Iff}{\mbox{ IFF }}
+\newcommand{\True}{\mbox{T}}
+\newcommand{\False}{\mbox{F}}
+\newcommand{\Subsets}[1]{\mathscr{P}_{#1}(\{1,\ldots N\})}
+\usepackage{graphicx}
+
+\begin{document}
+\begin{center}
+\begin{solution}
+Solutions to
+\end{solution}
+
+{\bf \Large \bf CSC240 Winter 2022 Homework Assignment 8}\\
+\end{center}
+{\bf My name and student number:}\\
+Sebastien Psarianos 1008596119\\
+{\bf The list of people with whom I discussed this homework assignment:}\\
+NO OUTSIDE DISCUSSION\\
+
+\begin{question}
+The following algorithm searches a text string $T$ of length $n$ for
+the first occurrence of a pattern string $P$ of length $m$.
+
+\begin{tabbing}
+XXXXXXXXXXXXXXXX\=XX\=XX\=\+\kill
+FindInString($T,n,P,m$)\\
+1 \hspace{2mm} \= $i \leftarrow 1$\\
+2 \> while \=$i \leq n-m+1$ do\\
+3 \> \> $j \leftarrow 1$\\
+4 \> \> $k \leftarrow i$\\
+5 \> \> while \=$j  \leq m$ and $T[k] = P[j]$ do\\
+6 \> \> \> $j \leftarrow j+1$\\
+7 \> \> \> $k \leftarrow k+1$\\
+8 \> \> end while\\
+9 \> \> if $j > m$ then return($i$)\\
+10 \> \> $i \leftarrow i+1$ \\
+11 \> end while\\
+12 \> return(0)
+\end{tabbing}
+\end{question}
+
+\begin{enumerate}
+
+\item
+\begin{question}
+Give a formal definition of what ``FindInString($T,n,P,m$) is correct'' means.
+\end{question}
+
+\begin{solution}
+{\bf Solution}:\\
+{\bf Precondition}\\
+- $n - m + 1 \ge 1 $ therefore $n-m \ge 0$, $n\ge m $\\\\
+For any arbitrary string $T$ of length $n$ and for any patern string $P$ of length $m$ if $n\ge m$ and ${\rm FindInString}(T, n, P, m)$ is performed, it will eventually halt and return $0$ if $P$ is not a substring of $T$ or the index of the first character in the first occurance of $P$ in $T$ if it is\\
+\end{solution}
+\item
+\begin{question}
+State useful loop invariants for the inner while loop.
+Specifically state where in the loop your invariants hold.
+\end{question}
+
+\begin{solution}
+{\bf Solution}:\\
+$k_v$: The value of $k$ after the $v$th iteration.\\
+$j_v$: The value of $j$ after the $v$th iteration\\\\
+At the start of an arbitrary $v$th iteration after the checks on line $5$\\
+1. $T[i..k_v] = P[1..j_v]$\\
+2. $j_{v}$ is a valid index for $P$ ($j_v\le m$)\\
+\end{solution}
+
+\item
+\begin{question}
+Prove your answer to question 2 is correct.
+\end{question}
+
+\begin{solution}
+{\bf Solution}:\\
+{\bf Lemma \#1}\\
+Let $P(v): \ints^+ \rightarrow \{T, F\} = $ ``If the $v$th iteration of the inner loop on line $5$ occurs, at the start\\
+$T[i..k_v] = P[1..j_v]\And j_v\le m$''\\
+$k_v$: The value of $k$ after the $l$th iteration.\\
+$j_v$: The value of $j$ after the $l$th iteration\\\\
+{\bf Base Case}\\
+$j_1$ is initiated as $1$ before the first iteration of the loop (line $3$)\\
+$k_1$ is initiated as $i$ before the first iteration of the loop (line $4$)\\
+\null\quad Assume the $1$st iteration occurs.\\
+\null\quad Therefore, the checks on line $5$ have passed.\\
+\null\quad Therefore $T[k_1] = P[j_1]$\\
+\null\quad Since $k_1 = i$, $T[k_1] = T[i]=T[i..k_1]$\\
+\null\quad Since $j_1 = 1$, $P[j_1] = P[1] = P[1..j_1]$\\
+\null\quad Therefore $T[i..k_1] = P[1..j_1]$\\
+\null\quad By the checks on line $5$ $j_1\le m$\\
+\null\quad Therefore $T[i..k_1] = P[1..j_1]\And  j_1\le m$\\
+If the $1$st iteration occurs, $T[i..k_1] = P[1..j_1]\And  j_1\le m$\\
+$P(1)$\\\\
+{\bf Induction Step}\\
+\null\quad Let $v\in\ints^+$ be arbitrary\\
+\null\qquad Assume $P(v)$ (I.H)\\
+\null\qquad\quad Assume the $v+1$th iteration occurs.\\
+\null\qquad\quad Therefore the last iteration must of occured and by the I.H, \\
+\null\qquad\quad $T[i..k_v] = P[1..j_v]\And j_v\le m$\\
+\null\qquad\quad Therefore the checks on line $5$ passed.\\
+\null\qquad\quad Therefore $T[k_{v}] = P[j_{v}]$\\
+\null\qquad\quad Since $k$ and $j$ are incremented by $1$ for every loop iteration. (lines $5$ and $6$), \\
+\null\qquad\quad $k_v + 1  =k_{v+1}\And j_v + 1 = k_{v+1}$\\
+\null\qquad\quad Therefore $T[i..k_v] \cdot T[k_{v+1}] = T[i..k_{v+1}]$ and $P[1..j_v] \cdot P[j_{v+1}] = P[1..k_{v+1}]$\\
+\null\qquad\quad Since both strings were identical before (induction hypothesis) and since the additional\\
+\null\qquad\quad character is identical.\\
+\null\qquad\quad $T[i..k_{v+1}] = P[1..k_{v+1}]$\\
+\null\qquad\quad By the check on line $5$, $j\le m$.\\
+\null\qquad\quad Therefore $T[i..k_{v+1}] = P[1..k_{v+1}]\And j\le m$\\
+\null\qquad If the $v+1$th iteration occurs, $T[i..k_{v+1}] = P[1..k_{v+1}]\And j\le m$\\
+\null\qquad $P(v+1)$\\
+\null\quad $P(v)\Implies P(v+1)$\\
+$\forall v\in\ints^+.P(v)\Implies P(v+1)$\\
+$\forall v\in\ints^+.P(v)$ (Induction)
+\end{solution}
+
+\item
+\begin{question}
+State useful loop invariants for the outer while loop.
+Specifically state where in the loop your invariants hold.
+\end{question}
+
+\begin{solution}
+{\bf Solution}:\\
+$i_l$: The value of $i$ at the start of the $l$th iteration.\\
+$k_l$ the value of $k$ after the inner loop terminates.\\
+$j_l$ the value of $j$ after the inner loop terminates.\\\\
+At the end of the $i$th iteration (line $10$).\\
+1. $T[i_l..k_l] \ne P[1..j_l] $
+\end{solution}
+
+\item
+\begin{question}
+Prove that your answer to question 4 is correct using your answer to question 2.
+\end{question}
+
+\begin{solution}
+{\bf Solution}:\\
+{\bf Lemma \#2}\\
+Let $l\in\ints^+$ be arbitrary\\
+\null\quad Assume that the $l$th iteration occurs\\
+\null\quad Therefore the inner loop must terminate\\
+\null\quad By lemma \#1, if the inner loop terminates, either a match was found at $T[l]$ or \\
+\null\quad no match was found.\\
+\null\quad If a match was found, $j_l> m$ must be true since the last value $P[m]$ was checked and then\\
+\null\quad $j=m$ was incremented to $j=m+1$.\\
+\null\quad Therefore the condition on line $9$ will pass and the loop will return before reaching line $10$\\
+\null\quad Therefore, if line $10$ is reached the condition $T[i_l..k_l] = P[1..j_l]$ must have failed.\\
+\null\quad Therefore $T[i_l..k_l] \ne P[1..j_l] $\\
+Therefore $\forall l\in\ints^+.T[i_1..k_1] \ne P[1..j_1]$\\
+\end{solution}
+
+\item
+\begin{question}
+Prove the partial correctness of FindInString($T,n,P,m$) using your answers to questions 2 and 4.
+\end{question}
+
+\begin{solution}
+{\bf Lemma \#3}\\
+\null\quad Assume the inner loop terminates and finds a match.\\
+\null\quad Therefore every character in $P[1..m]$ has been matched with a character in $T$ starting at $i$.\\
+\null\quad Since the index $m$ represents the end of $P$ with a starting index of $1$. The corresponding \\
+\null\quad end index for $T$ will be.\\
+\null\quad $T[i+m-1]$
+Therefore if the inner loop terminates and finds a match, the last character that was compared in $T$ will be $T[i+m-1]$\\
+
+{\bf Solution}:\\
+Let $S$ indicate the set of all text strings.\\
+Let $LEN(T, n): S\times \nats \rightarrow \nats = $ ``The string $T$ is $n$ characters long".\\
+
+\null\quad Let $n, m\in\nats$ be arbitrary.\\
+\null\qquad Let $T, P\in S$ be arbitrary \\
+\null\qquad\quad Assume $LEN(T, n)\And LEN(P, m)$\\
+\null\qquad\quad Suppose $FindInString(T, n, P, m )$ is performed and halts imediately after the $l$th \\
+\null\qquad\quad iteration of the outer loop and the $v$th iteration of the inner loop.\\
+\null\qquad\quad By the exit condition of the inner loop, either $j_v> m$ or $T[k_v] \ne P[j_v]$\\\\
+\null\qquad\qquad If $j_v > m$, by the lemma \#1, every value $P[1..m]$ has been found in order in $T[i..k_l]$.\\
+\null\qquad\qquad Since $P[1..m]$ represents entirety of $P$, $P$ has been found in $T$\\
+\null\qquad\qquad The value of $i$ is then returned on line $9$ representing the position of the first \\
+\null\qquad\qquad character of the substring $P$ in $T$.\\
+\null\qquad\quad Therefore the function returns the correct value in this case.\\\\
+\null\qquad\qquad For the function to reach the end of the loop on line $10$, no match for $P$ was found \\
+\null\qquad\qquad starting at $T[i]$. (by lemma \#2)\\
+\null\qquad\qquad For the function to exit, the return statement on line $12$ must have been reached \\
+\null\qquad\qquad For this to occur, the outer loops exit condition must've been satisfied before \\
+\null\qquad\qquad the $(l+1)$th iteration of the outer loop.\\\\
+\null\qquad\qquad Therefore $i> n-m + 1$. $i+m-1>n$ \\
+\null\qquad\qquad If $P$ exists in $T$ the last character checked would be $T[i + m - 1]$ (lemma \#3)\\
+\null\qquad\qquad however since this is greater than $n$ this is not a valid index.\\
+\null\qquad\qquad Therefore it is not possible for $P$ to fit in $T$.\\
+\null\qquad\qquad $P$ does not occur at or before $T[i]$ and it can't occur after.\\
+\null\qquad\quad Therefore there it is not possible for $P$ to be a substring of $T$ and the function correctly \\
+\null\qquad\quad returns $0$\\
+\null\qquad  $[LEN(T, n)\And LEN(P, m)]\Implies$ "the function returns the correct value"\\
+\null\quad $\forall T, P \in S.([LEN(T, n)\And LEN(P, m)]\Implies$ "the function returns \\
+\null\quad the correct value"$)$\\
+$\forall n,m\in\nats.\forall T, P \in S.([LEN(T, n)\And LEN(P, m)]\Implies$ "the function returns the correct value"$)$\\
+\end{solution}
+
+\item
+\begin{question}
+Determine the worst case complexity of $FindInString$,
+where one step is a comparison of two characters, one from
+$P$ and one from $T$.
+Derive matching upper and lower bounds.
+Do not use asymptotic notation (i.e. $O$ or $\Omega$).
+\end{question}
+
+\begin{solution}
+{\bf Solution}:\\
+Given two strings of the following form\\
+$T:a^n$\\
+$P: a^{m-1}b$ \\
+Where $n \ge m$\\
+This will result in the inner loop running $m$ times for every character in $P$ (since it will check every character but not return a match every time).\\
+Since $i=1$ initially and incremented after every loop iteration, the outer loop will run $n-m$ times.\\
+Since one comparison occurs each time the loop is run. $m\times(n-m)$ comparisons will occur when this loop completes\\
+This is the worst case since every possible $i$ value will be compared to every possible $m$ value.\\
+Therefore $P(n,m) = m\times(n-m) = mn- m^2$
+The worst case complexity for a string of length $n$ can be determined by taking the derivative of $P(n, m)$ with respect to $m$ and
+finding the max $m$ value that creates the largest complexity.\\\\
+Therefore given differing $m$ values, this function will be both a lower bound and an upper bound for the worst case time complexity of a string of length $n$.\\
+
+
+\end{solution}
+\end{enumerate}
+\end{document}
+

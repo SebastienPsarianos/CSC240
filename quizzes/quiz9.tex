@@ -1,0 +1,68 @@
+\documentclass[11pt]{article}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\setlength{\parskip}{1ex}
+\setlength{\parindent}{0in}
+\def\nats {{\mathbb N}}
+\def\ints {{\mathbb Z}}
+
+\usepackage{comment}
+\includecomment{solution}
+\includecomment{question}
+\newcommand{\Implies}{\mbox{ IMPLIES }}
+\newcommand{\Or}{\mbox{ OR }}
+\newcommand{\And}{\mbox{ AND }}
+\newcommand{\Not}{\mbox{ NOT }}
+\newcommand{\Iff}{\mbox{ IFF }}
+\newcommand{\True}{\mbox{T}}
+\newcommand{\False}{\mbox{F}}
+
+\begin{document}
+
+{\bf \large Quiz 9}
+
+\medskip
+
+\begin{question}
+Consider the folllowing algorithm:
+\begin{tabbing}
+1  $s \leftarrow 0$\\
+2  $i \leftarrow 0$\\
+3  while \=$i < n$ do\\
+4\>$s \leftarrow s + 2 \times i +1$\\
+5\>$i \leftarrow i+1$\\
+\end{question}
+\end{tabbing}
+
+\begin{question}
+Prove that $s = i^2$ is a loop invariant, i.e., it is true before and after every iteration of the loop.
+\end{question}
+
+\begin{solution}
+{\bf Solution:}\\
+{\bf Definitions}:\\
+$P(n): \nats \rightarrow \{T,F\} = $ ``The loop invariant $s=i^2$ holds after the $n$th iteration of the loop on line $3$''\\\\
+{\bf Base Case}:\\
+Initially from lines $1$ and $2$\\
+$s = 0$ and $i = 0$.\\
+$0 = 0^2$ therefore $P(0)$.\\\\
+{\bf Induction Step:}\\
+\null\quad Let $n\in \nats$ be arbitrary\\
+\null\quad Let $s'$ and $i'$ be the values of $s$ and $i$ at the start of the loop iteration.\\
+\null\quad Let $s''$ and $i''$ be the values at the end of the loop iteration.\\
+\null\qquad Assume $P(n)$\\
+\null\qquad Therefore $s' = i'^2$\\
+\null\qquad By line $4$, $s'' = s' + 2 \times i' + 1 $\\
+\null\qquad $= i'^2 + 2\times i' + 1$\\
+\null\qquad By line $5$ $i'' = i'+1$ and $i' = i'' -1$\\
+\null\qquad Therefore $s'' = (i''-1)^2 + 2\times (i'' - 1) + 1$\\
+\null\qquad $=i''^2 - 2i'' + 1 + 2i'' - 2 + 1$\\
+\null\qquad $=i''^2$\\
+\null\qquad Therefore $P(n + 1)$\\
+\null\quad $P(n)\Implies P(n+1)$ (Direct Proof of Implication)\\
+$\forall n\in\nats. \left(P(n) \Implies P(n+1)\right)$ (Generalization)\\
+$\forall n\in\nats.P(n)$ (Weak Induction)\\
+
+
+\end{solution}
+\end{document}

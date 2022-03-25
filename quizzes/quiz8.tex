@@ -1,0 +1,85 @@
+\documentclass[11pt]{article}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage{amsmath}
+\setlength{\parskip}{1ex}
+\setlength{\parindent}{0in}
+\def\nats {{\mathbb N}}
+\def\ints {{\mathbb Z}}
+
+\usepackage{comment}
+\includecomment{solution}
+\includecomment{question}
+\newcommand{\Implies}{\mbox{ IMPLIES }}
+\newcommand{\Or}{\mbox{ OR }}
+\renewcommand{\And}{\mbox{ AND }}
+\newcommand{\Not}{\mbox{ NOT }}
+\newcommand{\Iff}{\mbox{ IFF }}
+\newcommand{\True}{\mbox{T}}
+\newcommand{\False}{\mbox{F}}
+
+\begin{document}
+
+{\bf \large Quiz 8}
+
+\medskip
+
+\begin{question}
+For any nonempty string of decimal digits $b \in \{0,1, \ldots, 9\}^+$,
+let $f(b)$ be the string of decimal digits obtained by
+inserting a 0 to the right of the leftmost digit in $b$ and then, if the resulting string represents a positive integer $n$, replace it by a string of the same length which represents $n-1$.
+
+Let $L(b)$ denote the length of the string $b$.\\
+Let $D(b)$ denote the leftmost digit of $b$.\\
+Let $R(b)$ denote the natural number represented
+by $b$, excluding its leftmost digit, where the number represented by the empty string $\lambda$ is 0.\\
+Note that $b$ is uniquely determined by $L(b)$, $D(b)$, and $R(b)$.\\
+Let $S(b)$ denote the length of the shortest string in $\{0\}^+$ that can be obtained from $b$. \\
+In other words, $S(b) = L(b) + \min\{ i \in \nats\ |\ f^{(i)}(b) \in \{0\}^+\}$.
+\end{question}
+
+\begin{enumerate}
+\item
+\begin{question}
+What is the length of the shortest string in $\{0\}^+$ that can be obtained from $b$ if the leftmost digit of $b$ is 0? Justify your answer.
+\end{question}
+
+\begin{solution}
+{\bf Solution:}\\
+Since the numerical value of the string $R(b)$ decreases by $1$ every time that $f$ is applied to $b$. There is no increase in $R(b)$ when $f$ is applied since just $0$s are being added to the start of the string. Therefore if the function is applied $R(b)$ times, the value will be reduced to $0$ and will be in $\{0\}^+$. Since a $0$ is added every time the new length of the string will be $L(b) + R(b)$.
+\end{solution}
+
+\item
+\begin{question}
+What is the length of the shortest string in $\{0\}^+$ that can be obtained from $b$ if the leftmost digit of $b$ is 1? Justify your answer.
+\end{question}
+
+\begin{solution}
+{\bf Solution:}\\
+The string can be represented as $1\cdot b'$ where $b'$ is the string $b$ with the first digit $D(b)$ removed. Applying the function $R(b) - 1\times 10^{L(b)}$ will turn every value in $b'$ into a $0$ and will add $R(b) - 1\times 10^{L(n)}$ $0$s to the string. This new string can be represented as $1\cdot 0^{R(b)-1\times10^{L(n)}}\cdot0^{L(n)}$ where the superscript represents repeated concatination. \\\\
+Applying $f$ one more time will add another $0$ and create a string of the form $0\cdot 9^{R(b) - 1\times 10^{L(b)} + L(b) + 1}$. Since this starts with a $0$, applying the function $R(0\cdot 9^{R(b) - 1\times 10^{L(b)} + L(b) + 1})$ times will result in a string of $0$s.
+$$R(0\cdot 9^{R(b) - 1\times 10^{L(b)} + L(b) + 1}) = \sum _{i=0}^{R(b) - 1\times 10^{L(b)} + L(b) + 1}(9\times10^i)$$\\
+Therefore the function must be applied $ R(b)-1\times10^{L(b)} +  \sum _{i=0}^{R(b) - 1\times 10^{L(b)} + L(b) + 1}(9\times10^i)$ times to reduce everything to $0$s. Therefore the length will be increased by the same value.
+\end{solution}
+
+\item
+\begin{question}
+Write a recurrence describing the length of the shortest string in $\{0\}^+$ that can be obtained from $b$ for all possible choices of the leftmost digit of $b$. Justify your answer.
+\end{question}
+
+\begin{solution}
+{\bf Solution:}\\
+$$
+P(n, b) = L(b) +
+\begin{cases}
+    R(b) & n = 0\\
+    \sum _{i=0}^{R(b) - 1\times 10^{L(b)} + L(b) + 1}(9\times10^i) + P(n-1, 0\cdot 9^{R(b) - 1\times 10^{L(b)} + L(b) + 1}) &  n > 0
+\end{cases}
+$$\\
+This will handle the case of every string of $9$s and eventually the base case will handle the removal of all of the digits in $b'$\\
+\end{solution}
+\end{enumerate}
+\begin{question}
+Express your answers in terms of appropriately chosen parameters describing $b$.
+\end{question}
+\end{document}

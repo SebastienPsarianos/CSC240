@@ -1,0 +1,228 @@
+\documentclass[11pt]{article}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage{mathrsfs}
+\usepackage{comment}
+\excludecomment{ignore}
+\includecomment{solution}
+\excludecomment{question}
+\includecomment{questiononly}
+\setlength{\parindent}{0ex}
+\setlength{\parskip}{1ex}
+\def\nats {{\mathbb N}}
+\def\ints {{\mathbb Z}}
+\def\reals {{\mathbb R}}
+\newcommand{\Implies}{\mbox{ IMPLIES }}
+\newcommand{\Or}{\mbox{ OR }}
+\newcommand{\And}{\mbox{ AND }}
+\newcommand{\Not}{\mbox{NOT }}
+\newcommand{\Iff}{\mbox{ IFF }}
+\newcommand{\True}{\mbox{T}}
+\newcommand{\False}{\mbox{F}}
+\newcommand{\Subsets}[1]{\mathscr{P}_{#1}(\{1,\ldots N\})}
+\usepackage{graphicx}
+
+\begin{document}
+\begin{center}
+\begin{solution}
+Solutions to\\
+\end{solution}
+
+{\bf \Large \bf CSC240 Winter 2022 Homework Assignment 7}\\
+
+\begin{questiononly}
+due Thursday March 17, 2022
+\end{questiononly}
+
+\end{center}
+{\bf My name and student number:}\\
+Sebastien Psarianos 1008596119\\
+{\bf The list of people with whom I discussed this homework assignment:}\\
+NO OUTSIDE DISCUSSION\\
+
+\begin{question}
+The following  algorithm sorts the elements $L[i..j]$ of the array $L$ in nondecreasing order.
+It does so by recursively sorting the first two thirds of the array,
+then sorting the last two thirds of the array, and then sorting
+the first two thirds of the array again.
+
+ \begin{tabbing}
+XXXXXXXXXXXXXXXXXXX\=XX\=XX\=\+\kill
+    SortByThirds$(L,i,j)$ \\
+    1 \hspace{2mm} \= if \= $j-i \geq 2$ then \\
+    2 \> \> $m \leftarrow \lfloor \frac{j-i+1}{3} \rfloor$  \\
+    3 \> \> SortByThirds$(L,i, j - m)$\\
+    4 \> \> SortByThirds$(L,i + m , j)$\\
+    5 \> \> SortByThirds$(L,i, j - m)$\\
+    6 \> else if $j-i=1$ then  \\
+    7 \> \> if \= $L[j] < L[i]$ then  \\
+    8 \> \> \> $x \leftarrow L[j]$ \\
+    9 \> \> \> $L[j] \leftarrow L[i]$ \\
+    10 \> \> \> $L[i] \leftarrow x$
+  \end{tabbing}
+\end{question}
+
+\begin{enumerate}
+\item
+\label{recurrence}
+\begin{question}
+Write a recurrence describing the number of comparisons performed by SortByThirds($L,i,j$)
+as a function of the size of the list being sorted. The comparisons are $<$, =, and $\geq$. \\
+Justify your answer.
+\end{question}
+
+\begin{solution}
+{\bf Solution}:\\
+Given the base case of $j-i = 1$, the line $1$ comparison will fail and the line $6$ comparison will pass. Therefore the comparison on line $7$ will also run.
+This means that given $n=j-i-=1$, $T(1) = 3$\\
+Since both intervals $L[i..j-m]$ and $L[i+m..j]$ have a size of $j-i -m$ and since $m = \lfloor(j-i+1)/3\rfloor$ the size of the array that is being compared in each call to $SortByThirds$ is $j - i - m = j-i -\lfloor(j-i+1)/3\rfloor$ Since the floor of $(j-i+1)/3$ is being subtracted from $j-i$, this is equivalent to $\lceil j - i - (j-i+1)/3 \rceil = \lceil (3j-3i-j+i - 1)/3\rceil = \lceil (2j-2i - 1)/3 \rceil$\\
+Since $n = j - i$, this is equivalent to $\lceil (2n-1)/3\rceil =  \lceil \frac{2n}3- \frac13\rceil$\\
+Since every $SortByThirds$ recursive call is on an array of size $\lceil \frac{2n}3- \frac13\rceil$, $T(\lceil \frac{2n}3- \frac13\rceil)$ comparisons are made. Since there are three $SortByThirds$ calls and since there is one comparison at line $1$ that is always true, there is one additional comparison. Therefore $T(n) = 3T(\lceil \frac{2n}3 - \frac 13\rceil) + 1$ when $n\ge2$\\
+$$T(n) \in \left\{
+\begin{array}{ll}
+3 & n < 2\\
+3T(\lceil \frac{2n}3 - \frac13 \rceil)+ 1&  n\ge2
+\end{array} \right .$$
+
+\end{solution}
+
+\item
+\begin{question}
+Use the following slight generalization of the Master Theorem
+(with $b \in \reals^+$, rather than in $\ints^+$)
+to solve your
+recurrence in the previous question, to within a constant factor.
+For all $n \in \ints^+$,
+$$T(n) = \left\{
+\begin{array}{ll}
+c &  \mbox{if } n < B\\
+a_1 T( \lceil n/b \rceil) + a_2 T( \lfloor n/b \rfloor) + dn^i & \mbox{if } n \geq B,
+\end{array} \right .$$
+where $a_1, a_2, B\in \nats$, $a = a_1 + a_2 \geq 1$, $b > 1$,  and $b,c,d, i \in \reals^+ \cup \{0\}$, then
+$$T(n) \in \left\{
+\begin{array}{ll}
+\Theta(n^i \log n) &  \mbox{if } a= b^i\\
+\Theta(n^i ) &  \mbox{if } a< b^i\\
+\Theta(n^{\log_b a}) &  \mbox{if } a>  b^i.
+\end{array} \right .$$
+\end{question}
+
+\begin{solution}
+{\bf Solution}:\\
+
+\end{solution}
+
+\item
+\begin{question}
+Suppose that
+the elements of $L[1..3^k]$ are distinct and SortByThirds($L,1,2\cdot3^{k-1}$) is performed.
+If SortByThirds is correct,
+where are the largest $3^{k-1}$ elements of $L[1..3^k]$ located?\\
+Briefly justify your answer.
+\end{question}
+
+\begin{solution}
+{\bf Solution}:\\
+$2\cdot3^{k-1} = \frac23 3^k = 3^k - \frac13 3^k = 3^k - 3^{k-1}$ \\
+Therefore the interval $L[1..2\cdot3^{k-1}]$ is the same as $L[1..2\cdot3^{k} - 3^{k-1}]$.\\
+Let $A = 3^{k-1}$\\
+Since $SortByThirds(L, 1, 2A)$ is correct, every element in $L[1..2\cdot3^{k} -A]$ will be sorted in nondecreasing order. \\
+Therefore the interval $L[2\cdot3^{k} - 2A..2\cdot3^{k} - A]$ will contain the largest $A$ elements in $L[1..2\cdot3^{k} - A]$.\\
+Since $L[3^k-A..3^k]$ is not sorted by $SortByThirds$, if any of the largest $A$ values in $L[1..3^k]$ are in this inteval, they will not be moved. Therefore no matter where the largest values are, they will always be in the interval $L[3^k-2A..3^k]$\\
+
+\end{solution}
+
+
+\item
+\begin{question}
+Give a formal definition of what ``SortByThirds is correct'' means.
+\end{question}
+
+\begin{solution}
+{\bf Solution}:\\
+For any $i, j\in \ints^+$ and for any totally ordered array $L$ if $L[i..j]$ is a valid interval in $L$, $SortByThirds(L, i, j)$ will eventually halt and $L[i..j]$ will be sorted in nondecreasing order where $L$'s multiset is unchanged.
+\end{solution}
+
+\item
+\begin{question}
+Prove that SortByThirds is correct.
+You may assume the elements of $L$ are distinct.
+\end{question}
+
+\begin{solution}
+{\bf Definitions:}\\
+Let $A$ represent the set of all arrays of any totally ordered sets\\\\
+Let $B(L, i, j) = : A\times \ints^+\times\ints^+ \rightarrow \{T,F\}  $ "The inteveral $L[i..j]$ is a valid interval in $L$\\\\
+Let $Q(L, i, j): A\times \ints^+\times\ints^+ \rightarrow \{T,F\}  = $ When $SortByThirds(L, i, j)$ is performed it eventually halts; at which time $L[i..j]$ is sorted in nondecreasing order and $L$s multiset is unchanged\\\\
+Let $P(n): \ints^+ \rightarrow \{T,F\} = \forall i,j\in\ints^+.\forall L\in A.\left([B(L, i, j)\And n=j-i]\Implies Q(L, i, j)\right)$.
+
+{\bf Solution}:\\
+Claim: $\forall n\in \ints^+.P(n)$\\
+\null\quad Let $n\in \ints^+$ be arbitrary\\
+\null\quad {\bf Base Case: $n=1$ }\\
+\null\qquad Let $i, j\in Z^+$ be arbitrary\\
+\null\qquad\quad Let $L\in A$ be an arbitrary array\\
+\null\qquad\qquad Assume $B(L, i, j) \And  j - i= 1$\\
+\null\qquad\qquad Consider $SortByThirds(L, i, j)$\\
+\null\qquad\qquad The test on line $1$ fails\\
+\null\qquad\qquad The test on line $6$ passes\\
+\null\qquad\qquad There are two cases (assuming that every element in $L$ is distinct)\\
+\null\qquad\qquad\quad Assume $L[j]$ is greater than $L[i]$\\
+\null\qquad\qquad\quad The test on line $7$ fails and $L$ is not altered.\\
+\null\qquad\qquad\quad Since $j>i$, and since $L[j]>L[i]$ $L[i]$ and $L[j]$ are in nondecreasing order.\\
+\null\qquad\qquad\quad The list is not changed therefore the multiset of $L$ remains the same.\\
+\null\qquad\qquad $L[j]>L[i]\Implies Q(L, i, j)$\\
+\null\qquad\qquad\quad Assume $L[i]$ is greater than $L[j]$\\
+\null\qquad\qquad\quad The test on line $7$ passes.\\
+\null\qquad\qquad\quad The values of $L[i]$ and $L[j]$ will be swapped (Lines $8,9,10$)\\
+\null\qquad\qquad\quad $L[i]$ and $L[j]$ are now in nondecreasing order\\
+\null\qquad\qquad\quad The multiset of $L$ remains unchanged since nothing was added/removed, \\
+\null\qquad\qquad\quad only positions were swapped\\
+\null\qquad\qquad $L[j] < L[i]\Implies Q(L, i, j)$\\
+\null\qquad\qquad Therefore for all cases $Q(L, i, j)$\\
+\null\qquad\quad $B(L, i, j) \And  j - i= 1\Implies Q(L, i, j)$ (direct proof of implication)\\
+\null\qquad $\forall L\in A.\left([B(L, i, j) \And  j - i= 1]\Implies Q(L, i, j)\right)$ (generalization)\\
+\null\quad $\forall m,i,j\in\ints^+.\forall L\in A.\left([B(L, i, j) \And  j - i= 1]\Implies Q(L, i, j)\right)$ (generalization)\\
+\null\quad $P(1)$ (by definition)\\\\
+\null\quad {\bf Induction Step:}\\
+\null\qquad Assume $\forall n'\in\ints^+.n'<n \Implies P(n')$ (I.H)\\
+\null\qquad\quad Let $i, j\in Z^+$ be arbitrary\\
+\null\qquad\qquad Let $L\in A$ be an arbitrary array\\
+\null\qquad\qquad\quad Assume $B(L, i, j) \And  j - i= 1$\\
+\null\qquad\qquad\quad Consider $SortByThirds(L, i, j)$\\
+\null\qquad\qquad\quad The test on line $1$ will pass since $n$ is at least $2$\\
+\null\qquad\qquad\quad $m = \left\lfloor\frac{j-i+1}3\right\rfloor$ from line $2$\\
+\null\qquad\qquad\quad Since $m$ is a third of the size of the interval floored, the array can be divided into \\
+\null\qquad\qquad\quad thirds.\\
+\null\qquad\qquad\quad $L[i..i+m]$ and $L[j-m..j]$ (the first and last thirds) both have size $(i+m) - i=m$ \\
+\null\qquad\qquad\quad and $j-(j-m)=m$.\\\\
+\null\qquad\qquad\quad The middle third $L[i+m..j-m]$ has a size of $j-m - (i+m) = j-i-2m$.\\
+\null\qquad\qquad\quad Since $m$ is floored, subtracting $2m$ from the size of $L[i..j]$ will result in an interval \\
+\null\qquad\qquad\quad that is greater than or equal to $m$\\\\
+\null\qquad\qquad\quad By the I.H and by line $3$, $L[i..j-m]$ (first two thirds of $L$) is then sorted in \\
+\null\qquad\qquad\quad nondecreasing order.\\
+\null\qquad\qquad\quad By extension, $L[i+m..j-m]$ contains at least the $m$ largest items in $L[i..j-m]$\\\\
+\null\qquad\qquad\quad By the I.H and by line $4$, $L[i+m..j]$ (last two thirds of $L$) is then sorted in \\
+\null\qquad\qquad\quad nondecreasing order.\\
+\null\qquad\qquad\quad Since $L[i+j..j-m]$ previously contained the $m$ largest items in $l[i..j-m]$ and is\\
+\null\qquad\qquad\quad within $L[i+m..j]$, the interval $L[j-m..j]$ will now contain the largest $m$ items in \\
+\null\qquad\qquad\quad $L[i..j]$ sorted in nondecreasing order.\\\\
+\null\qquad\qquad\quad By the I.H and by line $5$, $L[i..j-m]$ is then sorted in nondecreasing order.\\
+\null\qquad\qquad\quad Since the largest items are sorted at the last third of the array, when the rest of \\
+\null\qquad\qquad\quad the items are sorted, every element will be in nondecreasing order on the interval \\
+\null\qquad\qquad\quad $L[i..j]$\\
+\null\qquad\qquad\quad By the I.H. none of the recursive calls to $SortByThirds$ will add or remove any \\
+\null\qquad\qquad\quad items, therefore the multiset of the items in $L$ remains the same.\\
+\null\qquad\qquad\quad $Q(L, i, j)$\\
+\null\qquad\qquad $B(L, i, j) \And  j - i= n\Implies Q(L, i, j)$ (direct proof of implication)\\
+\null\qquad\quad $\forall L\in A.\left([B(L, i, j) \And  j - i= n]\Implies Q(L, i, j)\right)$ (generalization)\\
+\null\qquad $\forall m,i,j\in\ints^+.\forall L\in A.\left([B(L, i, j) \And  j - i= n]\Implies Q(L, i, j)\right)$ (generalization)\\
+\null\qquad $P(n)$ (by definition)\\
+\null\quad $(\forall n'\in\ints^+.n'<n \Implies P(n'))\Implies P(n)$ (direct proof of implication)\\
+$\forall n\in\ints^+.(\forall n'\in\ints^+.n'<n \Implies P(n'))\Implies P(n)$ (generalization)\\
+By strong induction $\forall n\in\ints^+.P(n)$\\\\
+For any $i, j\in \ints^+$ and for any totally ordered array $L$ if $L[i..j]$ is a valid interval in $L$, $SortByThirds(L, i, j)$ will eventually halt and $L[i..j]$ will be sorted in nondecreasing order where $L$'s multiset is unchanged.
+\end{solution}
+\end{enumerate}
+\end{document}
+
