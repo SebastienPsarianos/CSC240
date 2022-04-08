@@ -1,0 +1,143 @@
+\documentclass[11pt]{article}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage{mathrsfs}
+\usepackage{comment}
+\includecomment{ignore}
+\includecomment{solution}
+\excludecomment{question}
+\setlength{\parindent}{0ex}
+\setlength{\parskip}{1ex}
+\def\nats {{\mathbb N}}
+\def\ints {{\mathbb Z}}
+\newcommand{\Implies}{\mbox{ IMPLIES }}
+\newcommand{\Or}{\mbox{ OR }}
+\newcommand{\And}{\mbox{ AND }}
+\newcommand{\Not}{\mbox{NOT }}
+\newcommand{\Iff}{\mbox{ IFF }}
+\newcommand{\True}{\mbox{T}}
+\newcommand{\False}{\mbox{F}}
+\usepackage{graphicx}
+\newcommand{\zzz}{\left [ \begin{array}{c}0\\0\\0 \end{array}\right ]}
+\newcommand{\zzo}{\left [ \begin{array}{c}0\\0\\1 \end{array} \right ]}
+\newcommand{\zoz}{\left [ \begin{array}{c}0\\1\\0 \end{array}\right ]}
+\newcommand{\zoo}{\left [ \begin{array}{c}0\\1\\1 \end{array}\right ]}
+\newcommand{\ooo}{\left [ \begin{array}{c}1\\1\\1 \end{array}\right ]}
+\newcommand{\ozo}{\left [ \begin{array}{c}1\\0\\1 \end{array} \right ]}
+\newcommand{\ozz}{\left [ \begin{array}{c}1\\0\\0 \end{array}\right ]}
+\newcommand{\ooz}{\left [ \begin{array}{c}1\\1\\0 \end{array}\right ]}
+
+\begin{document}
+\begin{center}
+Solutions to\\
+{\bf \Large \bf CSC240 Winter 2022 Homework Assignment 9}
+\end{center}
+
+\noindent
+{\bf My name and student number:}\\
+Sebastien Psarianos 1008596119
+
+\medskip
+
+\noindent
+{\bf The list of people with whom I discussed this homework assignment:}\\
+NO OUTSIDE DISCUSSION
+
+\begin{question}
+Let $\Sigma_3 = \left \{ \zzz , \zzo, \zoz, \cdots, \ooo \right \}$
+be the set of all height 3 columns of 0's and 1's.\\
+
+A nonempty string of symbols  $w \in \Sigma_3^+$ represents three nonempty binary strings:\\
+- $T(w)$, the sequence of bits in the top row of $w$,\\
+- $M(w)$, the sequence of bits in the middle row of $w$, and\\
+- $B(w)$,  the sequence of bits in the bottom row of $w$.
+
+Let $v:\{0,1\}^+ \rightarrow \nats$ be the function that maps a nonempty binary string to the integer that it represents.
+Consider each row to be a binary number and let
+$$S = \{ w \in \Sigma_3^+ \ |\ v(T(w)) + v(M(w)) = v(B(w)) \}$$
+be the set of strings such that the sum of the top two rows is equal to the bottom row.\\[6pt]
+For example,
+$\zzo \ozz \ooz \in S, \mbox{ but } \zzo  \ozo \not\in S.$
+\end{question}
+
+\begin{enumerate}
+\item
+\begin{question}
+Give a regular expression $r$ such that $L(r) = S$ and briefly explain how you derived it.\\
+You may find it helpful to first construct a regular expression $r'$ such that $L(r') = S^R$.
+\end{question}
+
+\begin{solution}
+{\bf Solution}:\\
+For any column to satisfy the conditions of $S$, the top two values (plus potential $1$s carried up from the previous column) must add up to:\\
+- $0$ or $2$ if the bottom digit is $0$\\
+- $1$ or $3$ if the bottom digit is $1$\\
+If the value is $2$ or $3$ then a value will be carried to the proceding column.\\
+There are $2^3 = 8$ possible columns. They can be categorized based on what conditions must be true for the bottom digit to be valid.\\\\
+{\bf Columns that require the following column to carry up a $1$}:\\
+(Referenced: carry required columns)\\
+For these columns to be valid, they must be followed by a column that carries a $1$ up. This means they can not end the sequence.\\\\
+$ \ozz, \zoz \ooo $: These columns will carry a $1$ to the preceding column.\\\\
+$ \zzo $: This column will not carry a $1$ to the preceding column.\\\\
+{\bf Columns that can't have a $1$ carried from the next column}\\
+(Referenced: no carry required columns)\\
+For these columns to be valid, they must not be followed by a column that carries a $1$ up.\\\\
+$ \zzz, \ozo, \zoo$: These columns don't carry a $1$ to the preceding column.\\
+$\ooz$: This column does carry a $1$ to the proceding column.\\\\
+Any number of no carry required columns that don't carry any $1$s themselves will be a valid sequence (the top two values will add up to the bottom for each column). $r_1$ handles this case.\\
+$$r_1 = \left(\zzz + \zoo + \ozo \right) ^ *$$
+Any number of carry required columns that carry $1$s themselves in a row is valid as long as it is preceded by a column that is carry required but does not carry a $1$ itself. It must also be followed by a column that carries a $1$ to validate all the preceding columns but does not require a $1$ to be carried from the column it procedes.\\
+$\zzo$ is the only column that is carry required and does not carry a $1$ itself.\\
+$\ooz$ is the only column that is no carry required and carries a $1$ itself.\\
+Any number of no carry required columns that don't carry themselves will not affect this sequence, therefore the $([100] + [101] + [111])^*$ regular expression can be appended between any set of carry required columns.\\
+Since this sequence is self contained (it doesn't carry or require any carried digits), this sequence can be repeated any amount of times. This gives the regular expression:
+$$ r_2 = \left(\zzz + \zoo + \ozo \right)^*\cdot \left( \zzo \cdot \left(\ozz + \zoz  + \ooo \right)^* \cdot \ooz\right.$$
+$$\left. \cdot \left(\zzz + \zoo + \ozo \right) ^ *\right)^*$$
+$r_1$ is implicit in $r_2$ since the part that was added in $r_2$:\\
+$([001]\cdot ([100]\cdot[010]\cdot[111])^*\cdot [110]\cdot([000]+[011]+[101])^*)^*$. is followed by a $^*$ therefore it can appear $0$ times leaving just $r_1$. Therefore let $r = r_2$
+$$ r = \left(\zzz + \zoo + \ozo \right)^*\cdot \left( \zzo \cdot \left(\ozz + \zoz  + \ooo \right)^* \cdot \ooz\right.$$
+$$\left. \cdot \left(\zzz + \zoo + \ozo \right) ^ *\right)^*$$
+\end{solution}
+\item
+\begin{question}
+Consider the NFA $A = (\{q,c_0,c_1\}, \Sigma_3, \delta,  q, \{c_0\})$, where the transition function\\
+$\delta: \{q,c_0,c_1\} \times \Sigma_3 \rightarrow \mathscr{P}(\{q,c_0,c_1\})$ is defined by the given state transition diagram.
+
+Prove that $S = L(A) = L(r) $.
+\end{question}
+
+\begin{solution}
+{\bf Solution:}\\
+Let $[abc]$ represent the column $ \left [ \begin{array}{c}a\\b\\c \end{array}\right ]$\\\\
+The state $c_1$ can only be reached when the current character is a $[001]$ and can only be exited when the current character is a $[110]$. The string will remain in the state if $[100], [010]$ or $[111]$ are the current character.\\
+Therefore for a state to enter $c_1$ and then exit to $c_0$, the change in characters must satisfy the regular expression $[001] \cdot ([100] + [010] + [111])\cdot [110]$.\\\\
+The regular expression ``$([000] + [011] + [101])^*\cdot ([001]\cdot ([100] + [010] + [111])^* \cdot [110]\cdot ([000] + [011] + [101])^*$'' handles the possibility that $c_1$ was visitied $\ge 0$ amount of times.\\
+The first $([000] + [011] + [101])^*$ handles the possibility of the that the first character was one of those characters and that the string stayed in $c_0$ for an arbitrary amount of characters.\\
+The $[101])^*\cdot ([001]\cdot ([100] + [010] + [111])^* \cdot [110]\cdot ([000] + [011] + [101])^*$ part handles an arbitrary amount of visits to $c_1$ with the possibility of staying at $c_0$ in between. Since the $c_1$ section ends in $[110]$, it is ensured that the string returns to $c_0$.\\\\
+The FSA $A$ is replicated by the regular expression since any number of visits to $c_1$ is handled as well as the possibility of staying at $c_0$ before and after each visit.\\
+Since this regular expression is identical to the regular expression $r$\\
+$L(r) = L(A)$ \\\\
+
+Every string in $S$ can be broken into substrings of the following format.\\
+
+1. Any sequence of columns that are not carry required and don't carry a $1$ can be sequenced together as they satisfy there own sums and therefore the string is valid. The only characters that satisfy this criteria are $[000], [101], [011]$\\
+A substring of type $1$ can be represented with the regular expression\\
+$([000] + [011] + [101])^*$ Let this regular expression be known as $r_{s1}$\\
+The only strings that will match with this regular expression are strings that satisfy the criteria of being a type $1$ substring.\\
+
+2. Any sequence of columns that carry a $1$ and are carry required ($[100], [010], [111]$) of length $\ge 0$ can be created as long as it is started by $[001]$ and ended by $[110]$.
+This is since every carry that is required in this sequence is provided by the following column. $[001]$ ends the sequence of carried digit by not carrying another digit forward. $[110]$ starts the carrying by providing the first carry digit while not requiring one itself.\\
+A substring of type $2$ can be represented with the regular expression\\
+$[001]\cdot ([100] + [010] + [111])^* \cdot [110]$ Let this regular expression be known as $r_{s2}$\\
+The only strings that will match with this regular expression are strings that satisfy the criteria of being a type $2$ substring.\\
+
+Every string in $S$ must be made up of these substrings as they are the only thing that satisfies the criteria. Any number of these substrings can be added together as they satisfy the criteria in isolation and don't affect the substrings around them.\\
+
+The regular expression $r_{s1} \cdot (r_{s2} \cdot r_{s1})^*$ (identical to $r$) allows any number of these blocks to be created in a row in any order. Since $r_{s1}$ and $r_{s2}$ both only match with substrings of $S$ and since $S$ is only made of strings that match with $r_{s1}$ and $r_{s2}$, every string in $L(r)$ is in $S$ and every string in $S$ is in $L(r)$\\
+Therefore $L(r) = S$
+
+Since $L(r) = S \And L(r) = L(A)$, $L(r) = S = L(a)$
+
+\end{solution}
+\end{enumerate}
+\end{document}
